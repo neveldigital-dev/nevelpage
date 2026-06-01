@@ -2571,17 +2571,17 @@
           </div>
         </div>
 
-        <form class="form-card reveal reveal-d2" onsubmit="event.preventDefault(); alert('Obrigado! Nosso time entrará em contato em minutos.');">
+        <form id="diagnosticForm" class="form-card reveal reveal-d2">
           <h3>Diagnóstico gratuito</h3>
           <p class="body">Preencha os dados abaixo. Em minutos um especialista entra em contato.</p>
 
           <div class="form-fields">
-            <input type="text" placeholder="Qual é o seu nome, Dr./Dra.?" required />
-            <input type="tel" placeholder="Qual seu número de WhatsApp?" required />
-            <input type="text" placeholder="Qual a sua especialidade / área de atuação?" required />
-            <input type="email" placeholder="Qual o seu e-mail preferencial?" required />
-            <input type="text" placeholder="Ótimo, qual o seu Instagram?" />
-            <select required>
+            <input type="text" name="nome" placeholder="Qual é o seu nome, Dr./Dra.?" required />
+            <input type="tel" name="whatsapp" id="whatsappInput" inputmode="numeric" autocomplete="tel" maxlength="16" placeholder="Qual seu número de WhatsApp?" required />
+            <input type="text" name="especialidade" placeholder="Qual a sua especialidade / área de atuação?" required />
+            <input type="email" name="email" id="emailInput" autocomplete="email" placeholder="Qual o seu e-mail preferencial?" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Informe um e-mail válido (precisa conter @ e domínio)." />
+            <input type="text" name="instagram" placeholder="Ótimo, qual o seu Instagram?" />
+            <select name="renda" required>
               <option value="" disabled selected>Qual é a renda média mensal do seu consultório?</option>
               <option value="10-20">R$ 10 mil a R$ 20 mil</option>
               <option value="30-40">R$ 30 mil a R$ 40 mil</option>
@@ -3134,6 +3134,84 @@
           scrollTrigger: { trigger: el, start: 'top 85%', once: true },
           onUpdate: () => { el.textContent = Math.round(obj.val); },
         });
+      });
+    })();
+
+    // ───────── Formulário: máscara WhatsApp + validação email + webhook ─────────
+    (function() {
+      const form = document.getElementById('diagnosticForm');
+      if (!form) return;
+
+      // Máscara WhatsApp — só dígitos, formato (DD) 9XXXX-XXXX ou (DD) XXXX-XXXX
+      const whats = document.getElementById('whatsappInput');
+      function formatWhatsApp(value) {
+        const digits = value.replace(/\D/g, '').slice(0, 11);
+        if (digits.length === 0) return '';
+        if (digits.length <= 2) return '(' + digits;
+        if (digits.length <= 6) return '(' + digits.slice(0, 2) + ') ' + digits.slice(2);
+        if (digits.length <= 10) return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 6) + '-' + digits.slice(6);
+        return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 7) + '-' + digits.slice(7);
+      }
+      if (whats) {
+        whats.addEventListener('input', (e) => {
+          e.target.value = formatWhatsApp(e.target.value);
+        });
+        whats.addEventListener('blur', (e) => {
+          const digits = e.target.value.replace(/\D/g, '');
+          if (digits.length > 0 && digits.length < 10) {
+            e.target.setCustomValidity('Informe um número válido com DDD.');
+          } else {
+            e.target.setCustomValidity('');
+          }
+        });
+      }
+
+      // Validação extra de e-mail (reforça presença de @ e domínio)
+      const email = document.getElementById('emailInput');
+      if (email) {
+        const validateEmail = () => {
+          const v = email.value.trim();
+          const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+          email.setCustomValidity(ok || v === '' ? '' : 'Informe um e-mail válido contendo @.');
+        };
+        email.addEventListener('input', validateEmail);
+        email.addEventListener('blur', validateEmail);
+      }
+
+      // Submit → POST JSON ao webhook da Nevel
+      const WEBHOOK_URL = 'https://webhook.nevelia.com.br/webhook/nevelmed-lp-ia';
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const submitText = submitBtn ? submitBtn.querySelector('.text_button') : null;
+      const originalText = submitText ? submitText.textContent : '';
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+
+        if (submitBtn) submitBtn.disabled = true;
+        if (submitText) submitText.textContent = 'Enviando…';
+
+        const data = Object.fromEntries(new FormData(form).entries());
+        data.origem = location.pathname === '/v2' || location.pathname.endsWith('/index-v2') ? 'v2' : 'v1';
+        data.enviado_em = new Date().toISOString();
+        data.pagina = location.href;
+
+        try {
+          const res = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          form.reset();
+          alert('Obrigado! Nosso time entrará em contato em minutos.');
+        } catch (err) {
+          alert('Não foi possível enviar agora. Por favor, tente novamente em instantes ou nos chame no WhatsApp.');
+          console.error('Webhook submit failed:', err);
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+          if (submitText) submitText.textContent = originalText;
+        }
       });
     })();
 
