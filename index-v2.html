@@ -2590,6 +2590,13 @@
             </select>
           </div>
 
+          <!-- UTMs ocultas — capturadas da query string da URL via JS -->
+          <input type="hidden" name="utm_source"   value="" />
+          <input type="hidden" name="utm_medium"   value="" />
+          <input type="hidden" name="utm_content"  value="" />
+          <input type="hidden" name="utm_term"     value="" />
+          <input type="hidden" name="utm_campaign" value="" />
+
           <button type="submit" class="btn btn-primary btn-block btn-icon-arrow">
             <div class="dots_border"></div>
             <span class="text_button">Clique e agende seu diagnóstico</span>
@@ -3140,6 +3147,13 @@
     (function() {
       const form = document.getElementById('diagnosticForm');
       if (!form) return;
+
+      // UTMs — captura da query string e popula os inputs ocultos
+      const params = new URLSearchParams(location.search);
+      ['utm_source', 'utm_medium', 'utm_content', 'utm_term', 'utm_campaign'].forEach((key) => {
+        const input = form.querySelector('input[name="' + key + '"]');
+        if (input) input.value = params.get(key) || '';
+      });
 
       // Máscara WhatsApp — só dígitos, formato (DD) 9XXXX-XXXX ou (DD) XXXX-XXXX
       const whats = document.getElementById('whatsappInput');
