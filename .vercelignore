@@ -1,0 +1,22 @@
+# Sistema / IDE
+.DS_Store
+.overclock-app/
+.vscode/
+.idea/
+.git/
+
+# Instaladores e binários pesados
+*.dmg
+
+# Documentos de origem
+*.docx
+*.md
+
+# Capturas e rascunhos
+Captura de tela*.png
+alteracoes/
+box-card-sendo-selecionado-conforme-o-scroll.json
+
+# Exports gigantes do Figma (não usados pela página)
+\[LP\].svg
+BENTO GRID.svg
