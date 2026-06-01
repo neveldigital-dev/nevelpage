@@ -2208,19 +2208,25 @@
         fill: #FFFFFF;
       }
 
-      /* ── 3) Imagine: título estático no topo da seção, sem caixa ── */
+      /* ── 3) Imagine: título sticky (sem caixa via backdrop-filter) + cards stack ── */
       .imagine-head {
-        position: static;
-        background: transparent;
-        padding: 0;
-        margin: 0 0 18px;
-        z-index: auto;
-        top: auto;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: rgba(35, 46, 72, 0.85);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        padding: 12px 0;
+        margin: 0 0 14px;
       }
+      /* Cards stickyam em offsets escalonados — efeito deck de cartas */
       .imagine-card {
-        position: static;
-        top: auto !important;
+        position: sticky;
       }
+      .imagine-card:nth-child(1) { top: 150px; }
+      .imagine-card:nth-child(2) { top: 174px; }
+      .imagine-card:nth-child(3) { top: 198px; }
+      .imagine-card:nth-child(4) { top: 222px; }
     }
   </style>
 </head>
