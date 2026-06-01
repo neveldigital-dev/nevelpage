@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/v2", "destination": "/index-v2" }
+    { "source": "/v2", "destination": "/index-v2" },
+    { "source": "/obg", "destination": "/index-obg" }
   ]
 }

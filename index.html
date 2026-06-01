@@ -3243,11 +3243,13 @@
           });
           if (!res.ok) throw new Error('HTTP ' + res.status);
           form.reset();
-          alert('Obrigado! Nosso time entrará em contato em minutos.');
+          // Redireciona para a página de obrigado preservando UTMs
+          const utmKeys = ['utm_source','utm_medium','utm_content','utm_term','utm_campaign'];
+          const qs = utmKeys.map(k => params.get(k) ? k + '=' + encodeURIComponent(params.get(k)) : null).filter(Boolean).join('&');
+          location.href = '/obg' + (qs ? '?' + qs : '');
         } catch (err) {
           alert('Não foi possível enviar agora. Por favor, tente novamente em instantes ou nos chame no WhatsApp.');
           console.error('Webhook submit failed:', err);
-        } finally {
           if (submitBtn) submitBtn.disabled = false;
           if (submitText) submitText.textContent = originalText;
         }
