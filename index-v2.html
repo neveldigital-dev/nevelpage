@@ -2093,6 +2093,92 @@
 
       /* Cards de depoimentos com fundo levemente tingido */
       .testimonial-card { background: #F6FDFF; }
+
+      /* ── 1) Hero: reduz gap entre texto/botões e o bento ── */
+      .hero-content { margin-bottom: 24px; }
+
+      /* ── 2) Método 3C: badge no topo, h2 no meio, descrição depois ── */
+      .method-head-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .method-head-right { display: contents; }
+      .method-badge { order: -1; align-self: flex-start; }
+      .method-head-grid h2 { order: 0; margin: 0; }
+      .method-head-right p { order: 1; margin: 0; }
+
+      /* Método 3C: pillars como cards clicáveis abaixo do diagrama */
+      .method-diagram {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .method-diagram svg.diagram-svg { margin-bottom: 6px; }
+      .method-pillar {
+        display: block;
+        position: relative;
+        margin: 0;
+        padding: 14px 16px;
+        max-width: none;
+        text-align: left;
+        background: var(--color-neutral-0);
+        border: 1px solid var(--color-neutral-100);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: border-color var(--transition-base), background var(--transition-base), opacity var(--transition-base);
+      }
+      .method-pillar .name {
+        display: block;
+        font-size: 14px;
+        letter-spacing: 1.2px;
+        margin: 0 0 6px;
+        text-align: left;
+      }
+      .method-pillar .desc {
+        display: block;
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: left;
+        color: var(--color-neutral-700);
+      }
+      /* Filtro: clique em um pillar esconde os desc dos demais e destaca o ativo */
+      .method-diagram[data-filter="1"] .pillar-2 .desc,
+      .method-diagram[data-filter="1"] .pillar-3 .desc,
+      .method-diagram[data-filter="2"] .pillar-1 .desc,
+      .method-diagram[data-filter="2"] .pillar-3 .desc,
+      .method-diagram[data-filter="3"] .pillar-1 .desc,
+      .method-diagram[data-filter="3"] .pillar-2 .desc {
+        display: none;
+      }
+      .method-diagram[data-filter="1"] .pillar-1,
+      .method-diagram[data-filter="2"] .pillar-2,
+      .method-diagram[data-filter="3"] .pillar-3 {
+        border-color: var(--color-primary);
+        background: var(--color-neutral-50);
+      }
+      .method-diagram[data-filter="1"] .pillar-2,
+      .method-diagram[data-filter="1"] .pillar-3,
+      .method-diagram[data-filter="2"] .pillar-1,
+      .method-diagram[data-filter="2"] .pillar-3,
+      .method-diagram[data-filter="3"] .pillar-1,
+      .method-diagram[data-filter="3"] .pillar-2 {
+        opacity: 0.55;
+      }
+
+      /* ── 3) Imagine: título sticky no topo; boxes em flow normal ── */
+      .imagine-head {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: var(--color-neutral-900);
+        padding: 18px 0 12px;
+        margin: -18px 0 0;
+      }
+      .imagine-card {
+        position: static;
+        top: auto !important;
+      }
     }
   </style>
 </head>
@@ -2949,6 +3035,17 @@
           if (!el) return;
           el.addEventListener('mouseenter', enter);
           el.addEventListener('mouseleave', leave);
+        });
+      });
+
+      // Click nos pillars (mobile): toggle data-filter — mostra só o pilar clicado
+      map.forEach(({ pillar, id }) => {
+        const p = diagram.querySelector(pillar);
+        if (!p) return;
+        p.addEventListener('click', () => {
+          const current = diagram.getAttribute('data-filter');
+          if (current === id) diagram.removeAttribute('data-filter');
+          else diagram.setAttribute('data-filter', id);
         });
       });
     })();
