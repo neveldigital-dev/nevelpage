@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# IDE / ferramentas locais
+.overclock-app/
+.vscode/
+.idea/
+
+# Vercel
+.vercel/
+
+# Instaladores e binários pesados
+*.dmg
+
+# Documentos de origem da copy
+*.docx
+Nevel\ MED\ -\ Copy\ LP*.md
+DesignSystem*.md
+WebSkill*.md
+\[DESIGN\ SYSTEM\].md
+
+# Capturas de tela e rascunhos
+Captura\ de\ tela*.png
+alteracoes/
+box-card-sendo-selecionado-conforme-o-scroll.json
+
+# Exports gigantes do Figma (referências, não usadas pela página)
+\[LP\].svg
+BENTO\ GRID.svg

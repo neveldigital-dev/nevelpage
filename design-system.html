@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System — Nevel MED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════ TOKENS ═══════════════════ */
+    :root {
+      --color-primary:          #06C4FE;
+      --color-primary-hover:    #05AEDE;
+      --color-primary-light:    #E0F9FF;
+
+      --color-secondary:        #2D5AD8;
+      --color-secondary-light:  #EEF2FD;
+
+      --color-neutral-900:      #232E48;
+      --color-neutral-700:      #384266;
+      --color-neutral-500:      #636D86;
+      --color-neutral-400:      #8892A9;
+      --color-neutral-100:      #E4F6FD;
+      --color-neutral-50:       #F3FCFF;
+      --color-neutral-0:        #FFFFFF;
+
+      --color-success:          #10B981;
+      --color-error:            #EF4444;
+      --color-warning:          #F59E0B;
+      --color-info:             #06C4FE;
+
+      --color-logo-text-dark:   #232E48;
+      --color-logo-text-light:  #CAF3FF;
+      --color-badge-start:      #06C4FE;
+      --color-badge-end:        #2D5AD8;
+
+      --font-family:            'Instrument Sans', system-ui, sans-serif;
+
+      --radius-xs:              4px;
+      --radius-sm:              8px;
+      --radius-md:              12px;
+      --radius-lg:              20px;
+      --radius-full:            9999px;
+
+      --transition-fast:        150ms ease;
+      --transition-base:        200ms ease;
+      --transition-enter:       400ms ease;
+
+      --badge-gradient: linear-gradient(135deg, #06C4FE 0%, #2D5AD8 100%);
+    }
+
+    /* ═══════════════════ RESET ═══════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-family);
+      font-weight: 400;
+      background: var(--color-neutral-0);
+      color: var(--color-neutral-900);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* ═══════════════════ LAYOUT ═══════════════════ */
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ═══════════════════ NAV ═══════════════════ */
+    .ds-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+    .ds-nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .ds-nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--color-neutral-900);
+    }
+    .ds-nav-logo .dot {
+      width: 28px; height: 28px;
+      border-radius: var(--radius-xs);
+      background: var(--badge-gradient);
+    }
+    .ds-nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .ds-nav-links a {
+      font-size: 14px;
+      color: var(--color-neutral-500);
+      transition: color var(--transition-fast);
+    }
+    .ds-nav-links a:hover { color: var(--color-primary); }
+
+    /* ═══════════════════ HEADER ═══════════════════ */
+    .ds-header {
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+    .ds-header .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--color-primary);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .ds-header h1 {
+      font-size: 72px;
+      font-weight: 500;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    .ds-header p {
+      font-size: 18px;
+      color: var(--color-neutral-500);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════ SECTION ═══════════════════ */
+    .ds-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--color-neutral-100);
+    }
+    .ds-section-head {
+      margin-bottom: 56px;
+    }
+    .ds-section-head .label {
+      font-size: 12px;
+      color: var(--color-primary);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .ds-section-head h2 {
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .ds-section-head p {
+      font-size: 16px;
+      color: var(--color-neutral-500);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════ LOGO SHOWCASE ═══════════════════ */
+    .logos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .logo-card {
+      border-radius: var(--radius-md);
+      padding: 56px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      min-height: 240px;
+      transition: transform var(--transition-base);
+    }
+    .logo-card:hover { transform: translateY(-2px); }
+    .logo-card.light {
+      background: var(--color-neutral-100);
+    }
+    .logo-card.dark {
+      background: var(--color-neutral-900);
+    }
+    .logo-card .caption {
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .logo-card.light .caption { color: var(--color-neutral-500); }
+    .logo-card.dark .caption { color: var(--color-neutral-400); }
+
+    /* Logo SVG */
+    .logo-svg {
+      height: 56px;
+      width: auto;
+    }
+
+    /* ═══════════════════ COLOR PALETTE ═══════════════════ */
+    .palette-group {
+      margin-bottom: 48px;
+    }
+    .palette-group h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-neutral-500);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--color-neutral-100);
+      transition: transform var(--transition-base);
+      cursor: pointer;
+    }
+    .swatch:hover { transform: translateY(-2px); }
+    .swatch-block {
+      height: 120px;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px 16px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .swatch-info {
+      padding: 14px 16px;
+      background: var(--color-neutral-0);
+    }
+    .swatch-info .name {
+      font-size: 14px;
+      color: var(--color-neutral-900);
+      margin-bottom: 4px;
+    }
+    .swatch-info .hex {
+      font-size: 12px;
+      color: var(--color-neutral-500);
+      font-family: 'SF Mono', Menlo, monospace;
+    }
+
+    /* ═══════════════════ TYPOGRAPHY ═══════════════════ */
+    .type-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .type-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+      align-items: baseline;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+    .type-meta {
+      font-size: 12px;
+      color: var(--color-neutral-500);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'SF Mono', Menlo, monospace;
+    }
+    .type-meta strong {
+      display: block;
+      color: var(--color-neutral-900);
+      font-weight: 500;
+      font-family: var(--font-family);
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .type-sample {
+      color: var(--color-neutral-900);
+      line-height: 1.2;
+    }
+    .type-sample.display { font-size: 48px; font-weight: 500; letter-spacing: -1.5px; }
+    .type-sample.h2     { font-size: 40px; font-weight: 500; letter-spacing: -1px; }
+    .type-sample.h3     { font-size: 24px; font-weight: 500; letter-spacing: -0.5px; }
+    .type-sample.body-l { font-size: 18px; font-weight: 400; line-height: 1.6; }
+    .type-sample.body   { font-size: 16px; font-weight: 400; line-height: 1.6; }
+    .type-sample.sm     { font-size: 14px; font-weight: 400; color: var(--color-neutral-500); }
+    .type-sample.xs     { font-size: 12px; font-weight: 400; color: var(--color-neutral-500); }
+
+    .type-weights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+      padding: 32px;
+      background: var(--color-neutral-100);
+      border-radius: var(--radius-md);
+    }
+    .type-weights .weight-card {
+      background: var(--color-neutral-0);
+      padding: 24px;
+      border-radius: var(--radius-sm);
+    }
+    .type-weights .weight-num {
+      font-size: 48px;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .type-weights .w400 { font-weight: 400; }
+    .type-weights .w500 { font-weight: 500; }
+    .type-weights .weight-label {
+      font-size: 13px;
+      color: var(--color-neutral-500);
+      font-family: 'SF Mono', Menlo, monospace;
+    }
+
+    /* ═══════════════════ BUTTONS ═══════════════════ */
+    .components-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .component-card {
+      background: var(--color-neutral-50);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .component-card .label {
+      font-size: 12px;
+      color: var(--color-neutral-500);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .component-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      color: #F3FCFF;
+      font-family: var(--font-family);
+      font-weight: 500;
+      font-size: 15px;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      padding: 16px 32px;
+      background:
+        radial-gradient(ellipse 140% 220% at 25% -40%, #CAF3FF 3%, #00AEFF 39%, #3C3CCE 100%) padding-box,
+        linear-gradient(90deg, #84D9FF 0%, #174D98 100%) border-box;
+      transition: filter var(--transition-base);
+    }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-primary:active { filter: brightness(0.96); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-neutral-900);
+      border: 1px solid var(--color-neutral-400);
+      font-family: var(--font-family);
+      font-weight: 400;
+      font-size: 15px;
+      border-radius: var(--radius-sm);
+      padding: 14px 28px;
+      transition: border-color var(--transition-base), color var(--transition-base);
+    }
+    .btn-outline:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .btn-dark {
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-0);
+      font-family: var(--font-family);
+      font-weight: 500;
+      font-size: 15px;
+      border-radius: var(--radius-sm);
+      border: none;
+      padding: 14px 28px;
+      transition: background var(--transition-base);
+    }
+    .btn-dark:hover { background: var(--color-neutral-700); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-neutral-500);
+      font-family: var(--font-family);
+      font-weight: 400;
+      font-size: 15px;
+      border: none;
+      padding: 14px 8px;
+      transition: color var(--transition-base);
+    }
+    .btn-ghost:hover { color: var(--color-primary); }
+
+    /* ═══════════════════ RADIUS / SHAPES ═══════════════════ */
+    .shapes-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .shape {
+      width: 120px;
+      height: 120px;
+      background: var(--color-neutral-100);
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+      font-size: 11px;
+      color: var(--color-neutral-500);
+      letter-spacing: 0.5px;
+      font-family: 'SF Mono', Menlo, monospace;
+      transition: background var(--transition-base);
+    }
+    .shape:hover { background: var(--color-primary-light); }
+    .shape.xs   { border-radius: var(--radius-xs); }
+    .shape.sm   { border-radius: var(--radius-sm); }
+    .shape.md   { border-radius: var(--radius-md); }
+    .shape.lg   { border-radius: var(--radius-lg); }
+    .shape.full { border-radius: var(--radius-full); }
+
+    /* ═══════════════════ INTERACTIONS ═══════════════════ */
+    .interactions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+    .interaction-card {
+      background: var(--color-neutral-50);
+      border-radius: var(--radius-md);
+      padding: 40px 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: background var(--transition-base), transform var(--transition-base);
+    }
+    .interaction-card:hover {
+      background: var(--color-primary-light);
+      transform: translateY(-4px);
+    }
+    .interaction-card .icon-circle {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      border-radius: var(--radius-full);
+      background: var(--color-neutral-0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-base);
+    }
+    .interaction-card:hover .icon-circle {
+      background: var(--color-primary);
+    }
+    .interaction-card .icon-circle svg {
+      width: 24px; height: 24px;
+      stroke: var(--color-neutral-900);
+      fill: none;
+      stroke-width: 1.5;
+      transition: stroke var(--transition-base);
+    }
+    .interaction-card:hover .icon-circle svg {
+      stroke: var(--color-neutral-900);
+    }
+    .interaction-card h4 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .interaction-card p {
+      font-size: 13px;
+      color: var(--color-neutral-500);
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════ INPUTS ═══════════════════ */
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 360px;
+    }
+    .input-field {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-100);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: var(--font-family);
+      font-size: 15px;
+      color: var(--color-neutral-900);
+      transition: border-color var(--transition-base);
+      outline: none;
+    }
+    .input-field::placeholder { color: var(--color-neutral-400); }
+    .input-field:focus { border-color: var(--color-primary); }
+
+    /* ═══════════════════ CODE BLOCK ═══════════════════ */
+    .code-block {
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-100);
+      padding: 28px 32px;
+      border-radius: var(--radius-md);
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+    .code-block .c-key { color: #66E9FF; }
+    .code-block .c-val { color: #CAF3FF; }
+    .code-block .c-com { color: var(--color-neutral-400); }
+
+    /* ═══════════════════ FOOTER ═══════════════════ */
+    .ds-footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--color-neutral-100);
+      text-align: center;
+      color: var(--color-neutral-400);
+      font-size: 13px;
+    }
+
+    /* ═══════════════════ ANIMATIONS ═══════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in { animation: fadeUp var(--transition-enter) both; }
+    .animate-in-d1 { animation-delay: 100ms; }
+    .animate-in-d2 { animation-delay: 200ms; }
+    .animate-in-d3 { animation-delay: 300ms; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav class="ds-nav">
+    <div class="container">
+      <a href="#top" class="ds-nav-logo">
+        <span class="dot"></span>
+        Design System
+      </a>
+      <ul class="ds-nav-links">
+        <li><a href="#logos">Logos</a></li>
+        <li><a href="#cores">Cores</a></li>
+        <li><a href="#tipografia">Tipografia</a></li>
+        <li><a href="#botoes">Botões</a></li>
+        <li><a href="#radius">Radius</a></li>
+        <li><a href="#interacoes">Interações</a></li>
+        <li><a href="#inputs">Inputs</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="ds-header" id="top">
+    <div class="container">
+      <span class="eyebrow animate-in">Nevel MED · v1.0</span>
+      <h1 class="animate-in animate-in-d1">Design System</h1>
+      <p class="animate-in animate-in-d2">
+        Sistema visual minimalista e tech para a Nevel MED. Cores extraídas da
+        paleta oficial, tipografia Instrument Sans em apenas dois pesos,
+        gradientes exclusivos para identidade e zero sombras.
+      </p>
+    </div>
+  </header>
+
+  <!-- ═══════════════ LOGOS ═══════════════ -->
+  <section class="ds-section" id="logos">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">01 — Identidade</div>
+        <h2>Logos</h2>
+        <p>Versão positiva para fundos claros e versão negativa para fundos escuros. O símbolo e o badge MED conservam o gradiente em qualquer aplicação.</p>
+      </div>
+
+      <div class="logos-grid">
+        <div class="logo-card light">
+          <!-- LOGO 01 -->
+          <svg class="logo-svg" viewBox="0 0 645 103" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M65.3061 38.7848L21.3304 0.302236L21.1876 0.118622C11.2878 0.118622 8.36523 5.87697 8.36523 12.9767V14.7109L32.1688 35.903C41.3597 44.0892 54.8401 45.2572 65.3061 38.7848Z" fill="url(#g1_a)"/>
+            <path d="M20.8963 82.0571V0.119186H15.3879C6.88554 0.119186 0 7.00473 0 15.4969V102.943C11.5371 102.943 20.8963 93.5942 20.8963 82.0571Z" fill="url(#g1_b)"/>
+            <path d="M26.937 64.1546L70.9177 102.637L71.0606 102.821C80.9604 102.821 83.883 97.0624 83.883 89.9626V88.2285L60.0794 67.0363C50.8885 58.8502 37.4081 57.6822 26.9421 64.1546H26.937Z" fill="url(#g1_c)"/>
+            <path d="M71.3503 20.8861V102.824H76.8587C85.356 102.824 92.2415 95.9385 92.2415 87.4464V0C80.7044 0 71.3452 9.34903 71.3452 20.8861H71.3503Z" fill="url(#g1_d)"/>
+            <path d="M167.786 25.6062H175.049V77.337H167.786L122.635 35.1123V77.337H115.372V25.6062H122.635L167.786 67.7677V25.6062Z" fill="#232E48"/>
+            <path d="M242.254 32.27H208.579C200.97 32.27 196.275 35.2807 194.493 41.3023C193.969 43.1341 193.644 45.4079 193.518 48.124H242.254V54.7877H193.518C193.644 57.4827 193.969 59.7565 194.493 61.6093C196.275 67.6519 200.97 70.6733 208.579 70.6733H242.254V77.337H208.768C204.303 77.337 200.593 76.6738 197.637 75.3473C193.277 73.3893 190.217 70.0416 188.456 65.3044C186.905 61.1145 186.129 56.5036 186.129 51.4716C186.129 46.4185 186.905 41.8076 188.456 37.6388C190.28 32.8384 193.34 29.4697 197.637 27.5327C200.572 26.2484 204.282 25.6062 208.768 25.6062H242.254V32.27Z" fill="#232E48"/>
+            <path d="M310.335 25.6062H318.321L287.225 77.337H280.716L249.494 25.6062H257.543L283.955 69.5679L310.335 25.6062Z" fill="#232E48"/>
+            <path d="M377.636 32.27H343.961C336.352 32.27 331.657 35.2807 329.875 41.3023C329.351 43.1341 329.026 45.4079 328.9 48.124H377.636V54.7877H328.9C329.026 57.4827 329.351 59.7565 329.875 61.6093C331.657 67.6519 336.352 70.6733 343.961 70.6733H377.636V77.337H344.15C339.685 77.337 335.975 76.6738 333.019 75.3473C328.659 73.3893 325.599 70.0416 323.838 65.3044C322.287 61.1145 321.512 56.5036 321.512 51.4716C321.512 46.4185 322.287 41.8076 323.838 37.6388C325.662 32.8384 328.722 29.4697 333.019 27.5327C335.954 26.2484 339.664 25.6062 344.15 25.6062H377.636V32.27Z" fill="#232E48"/>
+            <path d="M439.586 70.6733V77.337H398.271C395.546 77.337 393.376 76.4948 391.762 74.8105C390.127 73.1682 389.31 71.0101 389.31 68.3362V25.6062H396.636V68.2731C396.636 69.8732 397.474 70.6733 399.151 70.6733H439.586Z" fill="#232E48"/>
+            <rect x="462.716" y="9.732" width="182.137" height="83.4793" rx="17.1827" fill="url(#g1_e)"/>
+            <path d="M526.953 35.0287H531.472V67.9145H526.953V43.8223L511.864 67.9145H507.679L492.551 43.7822V67.9145H488.012V35.0287H492.551L509.742 62.5741L526.953 35.0287Z" fill="#CAF3FF"/>
+            <path d="M573.437 39.2649H552.395C547.64 39.2649 544.706 41.1789 543.593 45.0069C543.265 46.1713 543.062 47.6169 542.984 49.3435H573.437V53.5797H542.984C543.062 55.2929 543.265 56.7384 543.593 57.9162C544.706 61.7576 547.64 63.6783 552.395 63.6783H573.437V67.9145H552.513C549.723 67.9145 547.404 67.4929 545.557 66.6496C542.833 65.4049 540.921 63.2767 539.82 60.2652C538.851 57.6017 538.367 54.6705 538.367 51.4716C538.367 48.2593 538.851 45.3281 539.82 42.678C540.96 39.6263 542.872 37.4848 545.557 36.2534C547.391 35.4369 549.71 35.0287 552.513 35.0287H573.437V39.2649Z" fill="#CAF3FF"/>
+            <path d="M614.368 57.9162C614.827 56.2432 615.056 54.095 615.056 51.4716C615.056 48.7947 614.827 46.6398 614.368 45.0069C613.255 41.1789 610.321 39.2649 605.566 39.2649H585.84V63.6783H605.566C610.321 63.6783 613.255 61.7576 614.368 57.9162ZM618.121 42.678C619.077 45.3281 619.555 48.2593 619.555 51.4716C619.555 54.6705 619.077 57.6017 618.121 60.2652C617.021 63.2767 615.115 65.4049 612.404 66.6496C610.557 67.4929 608.238 67.9145 605.448 67.9145H581.302V35.0287H605.448C608.278 35.0287 610.596 35.4369 612.404 36.2534C615.089 37.4714 616.995 39.6129 618.121 42.678Z" fill="#CAF3FF"/>
+            <defs>
+              <linearGradient id="g1_a" x1="72.8598" y1="52.5813" x2="0.607517" y2="-1.40128" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g1_b" x1="9.49694" y1="-6.53684" x2="11.7105" y2="128.69" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g1_c" x1="19.3833" y1="50.358" x2="91.6356" y2="104.341" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g1_d" x1="82.7446" y1="109.48" x2="80.531" y2="-25.7417" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g1_e" x1="471.307" y1="2.85888" x2="639.698" y2="97.3637" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#06C4FE"/><stop offset="1" stop-color="#2D5AD8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="caption">LOGO 01 · Versão positiva</div>
+        </div>
+
+        <div class="logo-card dark">
+          <!-- LOGO 02 -->
+          <svg class="logo-svg" viewBox="0 0 645 103" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M65.3061 38.7848L21.3304 0.302236L21.1876 0.118622C11.2878 0.118622 8.36523 5.87697 8.36523 12.9767V14.7109L32.1688 35.903C41.3597 44.0892 54.8401 45.2572 65.3061 38.7848Z" fill="url(#g2_a)"/>
+            <path d="M20.8963 82.0571V0.119171H15.3879C6.88554 0.119171 0 7.00471 0 15.4969V102.943C11.5371 102.943 20.8963 93.5942 20.8963 82.0571Z" fill="url(#g2_b)"/>
+            <path d="M26.937 64.1546L70.9177 102.637L71.0606 102.821C80.9604 102.821 83.883 97.0624 83.883 89.9626V88.2285L60.0794 67.0363C50.8885 58.8502 37.4081 57.6822 26.9421 64.1546H26.937Z" fill="url(#g2_c)"/>
+            <path d="M71.3503 20.8861V102.824H76.8587C85.356 102.824 92.2415 95.9385 92.2415 87.4464V0C80.7044 0 71.3452 9.34903 71.3452 20.8861H71.3503Z" fill="url(#g2_d)"/>
+            <path d="M167.786 25.6062H175.049V77.337H167.786L122.635 35.1123V77.337H115.372V25.6062H122.635L167.786 67.7677V25.6062Z" fill="#CAF3FF"/>
+            <path d="M242.254 32.27H208.579C200.97 32.27 196.275 35.2807 194.493 41.3023C193.969 43.1341 193.644 45.4079 193.518 48.124H242.254V54.7877H193.518C193.644 57.4827 193.969 59.7565 194.493 61.6093C196.275 67.6519 200.97 70.6733 208.579 70.6733H242.254V77.337H208.768C204.303 77.337 200.593 76.6738 197.637 75.3473C193.277 73.3893 190.217 70.0416 188.456 65.3044C186.905 61.1145 186.129 56.5036 186.129 51.4716C186.129 46.4185 186.905 41.8076 188.456 37.6388C190.28 32.8384 193.34 29.4697 197.637 27.5327C200.572 26.2484 204.282 25.6062 208.768 25.6062H242.254V32.27Z" fill="#CAF3FF"/>
+            <path d="M310.335 25.6062H318.321L287.225 77.337H280.716L249.494 25.6062H257.543L283.955 69.5679L310.335 25.6062Z" fill="#CAF3FF"/>
+            <path d="M377.636 32.27H343.961C336.352 32.27 331.657 35.2807 329.875 41.3023C329.351 43.1341 329.026 45.4079 328.9 48.124H377.636V54.7877H328.9C329.026 57.4827 329.351 59.7565 329.875 61.6093C331.657 67.6519 336.352 70.6733 343.961 70.6733H377.636V77.337H344.15C339.685 77.337 335.975 76.6738 333.019 75.3473C328.659 73.3893 325.599 70.0416 323.838 65.3044C322.287 61.1145 321.512 56.5036 321.512 51.4716C321.512 46.4185 322.287 41.8076 323.838 37.6388C325.662 32.8384 328.722 29.4697 333.019 27.5327C335.954 26.2484 339.664 25.6062 344.15 25.6062H377.636V32.27Z" fill="#CAF3FF"/>
+            <path d="M439.586 70.6733V77.337H398.271C395.546 77.337 393.376 76.4948 391.762 74.8105C390.127 73.1682 389.31 71.0101 389.31 68.3362V25.6062H396.636V68.2731C396.636 69.8732 397.474 70.6733 399.151 70.6733H439.586Z" fill="#CAF3FF"/>
+            <rect x="462.716" y="9.73203" width="182.137" height="83.4793" rx="17.1827" fill="url(#g2_e)"/>
+            <path d="M526.953 35.0288H531.472V67.9145H526.953V43.8224L511.864 67.9145H507.679L492.551 43.7823V67.9145H488.012V35.0288H492.551L509.742 62.5741L526.953 35.0288Z" fill="#CAF3FF"/>
+            <path d="M573.437 39.265H552.395C547.64 39.265 544.706 41.179 543.593 45.0069C543.265 46.1714 543.062 47.6169 542.984 49.3435H573.437V53.5797H542.984C543.062 55.2929 543.265 56.7385 543.593 57.9163C544.706 61.7577 547.64 63.6783 552.395 63.6783H573.437V67.9145H552.513C549.723 67.9145 547.404 67.4929 545.557 66.6497C542.833 65.4049 540.921 63.2768 539.82 60.2653C538.851 57.6018 538.367 54.6706 538.367 51.4717C538.367 48.2594 538.851 45.3282 539.82 42.678C540.96 39.6264 542.872 37.4848 545.557 36.2535C547.391 35.437 549.71 35.0288 552.513 35.0288H573.437V39.265Z" fill="#CAF3FF"/>
+            <path d="M614.368 57.9163C614.827 56.2432 615.056 54.095 615.056 51.4717C615.056 48.7948 614.827 46.6399 614.368 45.0069C613.255 41.179 610.321 39.265 605.566 39.265H585.84V63.6783H605.566C610.321 63.6783 613.255 61.7577 614.368 57.9163ZM618.121 42.678C619.077 45.3282 619.555 48.2594 619.555 51.4717C619.555 54.6706 619.077 57.6018 618.121 60.2653C617.021 63.2768 615.115 65.4049 612.404 66.6497C610.557 67.4929 608.238 67.9145 605.448 67.9145H581.302V35.0288H605.448C608.278 35.0288 610.596 35.437 612.404 36.2535C615.089 37.4715 616.995 39.613 618.121 42.678Z" fill="#CAF3FF"/>
+            <defs>
+              <linearGradient id="g2_a" x1="72.8598" y1="52.5813" x2="0.607517" y2="-1.40128" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g2_b" x1="9.49694" y1="-6.53685" x2="11.7105" y2="128.69" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g2_c" x1="19.3833" y1="50.358" x2="91.6356" y2="104.341" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g2_d" x1="82.7446" y1="109.48" x2="80.531" y2="-25.7417" gradientUnits="userSpaceOnUse">
+                <stop offset="0.03" stop-color="white"/><stop offset="0.38" stop-color="#00C3FF"/><stop offset="0.42" stop-color="#05B5FA"/><stop offset="0.57" stop-color="#1D81E7"/><stop offset="0.69" stop-color="#2D5BD9"/><stop offset="0.79" stop-color="#3844D1"/><stop offset="0.86" stop-color="#3C3CCE"/>
+              </linearGradient>
+              <linearGradient id="g2_e" x1="471.307" y1="2.85894" x2="639.698" y2="97.3637" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#06C4FE"/><stop offset="1" stop-color="#2D5AD8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="caption">LOGO 02 · Versão negativa</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CORES ═══════════════ -->
+  <section class="ds-section" id="cores">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">02 — Paleta</div>
+        <h2>Cores</h2>
+        <p>Extraídas do arquivo oficial. Primária e secundária para identidade, neutras tech para hierarquia, semânticas para estados.</p>
+      </div>
+
+      <div class="palette-group">
+        <h3>Primária</h3>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-block" style="background:#06C4FE; color:#232E48;">Primária</div>
+            <div class="swatch-info"><div class="name">Primary</div><div class="hex">#06C4FE</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#05AEDE; color:#fff;">Hover</div>
+            <div class="swatch-info"><div class="name">Primary Hover</div><div class="hex">#05AEDE</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#E0F9FF; color:#232E48;">Light</div>
+            <div class="swatch-info"><div class="name">Primary Light</div><div class="hex">#E0F9FF</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="palette-group">
+        <h3>Secundária</h3>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-block" style="background:#2D5AD8; color:#fff;">Secundária</div>
+            <div class="swatch-info"><div class="name">Secondary</div><div class="hex">#2D5AD8</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#EEF2FD; color:#232E48;">Light</div>
+            <div class="swatch-info"><div class="name">Secondary Light</div><div class="hex">#EEF2FD</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="palette-group">
+        <h3>Neutras</h3>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-block" style="background:#232E48; color:#fff;">900</div>
+            <div class="swatch-info"><div class="name">Neutral 900</div><div class="hex">#232E48</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#384266; color:#fff;">700</div>
+            <div class="swatch-info"><div class="name">Neutral 700</div><div class="hex">#384266</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#636D86; color:#fff;">500</div>
+            <div class="swatch-info"><div class="name">Neutral 500</div><div class="hex">#636D86</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#8892A9; color:#fff;">400</div>
+            <div class="swatch-info"><div class="name">Neutral 400</div><div class="hex">#8892A9</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#E4F6FD; color:#232E48;">100</div>
+            <div class="swatch-info"><div class="name">Neutral 100 · A dobra</div><div class="hex">#E4F6FD</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#F3FCFF; color:#232E48; border:1px solid #E4F6FD;">50</div>
+            <div class="swatch-info"><div class="name">Neutral 50</div><div class="hex">#F3FCFF</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#FFFFFF; color:#232E48; border:1px solid #E4F6FD;">0</div>
+            <div class="swatch-info"><div class="name">White · Base</div><div class="hex">#FFFFFF</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="palette-group">
+        <h3>Semânticas</h3>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-block" style="background:#10B981; color:#fff;">Sucesso</div>
+            <div class="swatch-info"><div class="name">Success</div><div class="hex">#10B981</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#EF4444; color:#fff;">Erro</div>
+            <div class="swatch-info"><div class="name">Error</div><div class="hex">#EF4444</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#F59E0B; color:#fff;">Alerta</div>
+            <div class="swatch-info"><div class="name">Warning</div><div class="hex">#F59E0B</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#06C4FE; color:#232E48;">Info</div>
+            <div class="swatch-info"><div class="name">Info</div><div class="hex">#06C4FE</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TIPOGRAFIA ═══════════════ -->
+  <section class="ds-section" id="tipografia">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">03 — Tipografia</div>
+        <h2>Instrument Sans</h2>
+        <p>Sans-serif geométrica com personalidade tech. Hierarquia construída por tamanho e cor — apenas dois pesos, regular e medium.</p>
+      </div>
+
+      <div class="type-list">
+        <div class="type-row">
+          <div class="type-meta"><strong>Display / H1</strong>48 / 500</div>
+          <div class="type-sample display">Medicina é cuidado. Crescimento é estratégia.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>H2</strong>40 / 500</div>
+          <div class="type-sample h2">Confiança e resultado andam juntos</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>H3</strong>24 / 500</div>
+          <div class="type-sample h3">Onde sua clínica está hoje</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>Body Large</strong>18 / 400</div>
+          <div class="type-sample body-l">Combinamos estratégia, tecnologia e gestão para atrair demanda qualificada e aumentar a renda do seu consultório.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>Body</strong>16 / 400</div>
+          <div class="type-sample body">Nossa missão é clara: conectar pacientes qualificados a médicos verdadeiramente preocupados em cuidar deles.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>Small</strong>14 / 400</div>
+          <div class="type-sample sm">Em minutos, um dos nossos especialistas enviará uma mensagem para agendar a reunião mais importante para o seu consultório.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>Micro</strong>12 / 400</div>
+          <div class="type-sample xs">EXCLUSIVO PARA MÉDICOS, CLÍNICAS E CONSULTÓRIOS</div>
+        </div>
+      </div>
+
+      <div class="type-weights">
+        <div class="weight-card">
+          <div class="weight-num w400">Aa</div>
+          <div class="weight-label">Regular · 400</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-num w500">Aa</div>
+          <div class="weight-label">Medium · 500</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ BOTÕES ═══════════════ -->
+  <section class="ds-section" id="botoes">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">04 — Componentes</div>
+        <h2>Botões</h2>
+        <p>Quatro variações. Cada interação com transição suave de 200ms.</p>
+      </div>
+
+      <div class="components-grid">
+        <div class="component-card">
+          <div class="label">Primário</div>
+          <div class="component-row">
+            <button class="btn-primary">Quero mais informações</button>
+            <button class="btn-primary">Próximo passo</button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="label">Outline</div>
+          <div class="component-row">
+            <button class="btn-outline">Ver cases de sucesso</button>
+            <button class="btn-outline">Saiba mais</button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="label">Escuro</div>
+          <div class="component-row">
+            <button class="btn-dark">Falar com o time</button>
+            <button class="btn-dark">Continuar</button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="label">Ghost</div>
+          <div class="component-row">
+            <button class="btn-ghost">Cancelar</button>
+            <button class="btn-ghost">Voltar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RADIUS ═══════════════ -->
+  <section class="ds-section" id="radius">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">05 — Forma</div>
+        <h2>Border Radius</h2>
+        <p>Cantos geométricos. Pequenos em elementos de UI, generosos em containers grandes.</p>
+      </div>
+
+      <div class="shapes-row">
+        <div class="shape xs">4px · xs</div>
+        <div class="shape sm">8px · sm</div>
+        <div class="shape md">12px · md</div>
+        <div class="shape lg">20px · lg</div>
+        <div class="shape full">9999 · full</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ INTERAÇÕES ═══════════════ -->
+  <section class="ds-section" id="interacoes">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">06 — Movimento</div>
+        <h2>Interações</h2>
+        <p>Passe o mouse sobre os cards. Tudo desliza, nada pisca, nada pula — transições suaves de 200ms.</p>
+      </div>
+
+      <div class="interactions-grid">
+        <div class="interaction-card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h4>Hover suave</h4>
+          <p>Cor de fundo muda em 200ms ease, sem flashs</p>
+        </div>
+        <div class="interaction-card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          </div>
+          <h4>Translate sutil</h4>
+          <p>Eleva 4px no hover — sensação de toque</p>
+        </div>
+        <div class="interaction-card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h4>Sem sombras</h4>
+          <p>Profundidade vem da cor, não da elevação</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ INPUTS ═══════════════ -->
+  <section class="ds-section" id="inputs">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">07 — Formulário</div>
+        <h2>Inputs</h2>
+        <p>Campos minimalistas. Border discreto, focus na primária.</p>
+      </div>
+
+      <div class="input-row">
+        <input type="text" class="input-field" placeholder="Qual é o seu nome, Dr./Dra.?" />
+        <input type="tel" class="input-field" placeholder="Qual seu número de WhatsApp?" />
+        <input type="text" class="input-field" placeholder="Qual a sua especialidade?" />
+        <input type="email" class="input-field" placeholder="Qual o seu e-mail preferencial?" />
+        <button class="btn-primary" style="margin-top:8px;">Ir para o próximo passo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CSS TOKENS ═══════════════ -->
+  <section class="ds-section">
+    <div class="container">
+      <div class="ds-section-head">
+        <div class="label">08 — Tokens</div>
+        <h2>CSS Variables</h2>
+        <p>Cole no <code>:root</code> de qualquer projeto e tudo está pronto para uso.</p>
+      </div>
+
+<pre class="code-block"><span class="c-com">/* Cores */</span>
+<span class="c-key">--color-primary</span>:          <span class="c-val">#06C4FE</span>;
+<span class="c-key">--color-primary-hover</span>:    <span class="c-val">#05AEDE</span>;
+<span class="c-key">--color-primary-light</span>:    <span class="c-val">#E0F9FF</span>;
+<span class="c-key">--color-secondary</span>:        <span class="c-val">#2D5AD8</span>;
+<span class="c-key">--color-secondary-light</span>:  <span class="c-val">#EEF2FD</span>;
+<span class="c-key">--color-neutral-900</span>:      <span class="c-val">#232E48</span>;
+<span class="c-key">--color-neutral-700</span>:      <span class="c-val">#384266</span>;
+<span class="c-key">--color-neutral-500</span>:      <span class="c-val">#636D86</span>;
+<span class="c-key">--color-neutral-400</span>:      <span class="c-val">#8892A9</span>;
+<span class="c-key">--color-neutral-100</span>:      <span class="c-val">#E4F6FD</span>;
+<span class="c-key">--color-neutral-50</span>:       <span class="c-val">#F3FCFF</span>;
+<span class="c-key">--color-neutral-0</span>:        <span class="c-val">#FFFFFF</span>;
+
+<span class="c-com">/* Tipografia */</span>
+<span class="c-key">--font-family</span>:            <span class="c-val">'Instrument Sans', system-ui, sans-serif</span>;
+<span class="c-key">--font-weight-regular</span>:    <span class="c-val">400</span>;
+<span class="c-key">--font-weight-medium</span>:     <span class="c-val">500</span>;
+
+<span class="c-com">/* Radius */</span>
+<span class="c-key">--radius-xs</span>:  <span class="c-val">4px</span>;
+<span class="c-key">--radius-sm</span>:  <span class="c-val">8px</span>;
+<span class="c-key">--radius-md</span>:  <span class="c-val">12px</span>;
+<span class="c-key">--radius-lg</span>:  <span class="c-val">20px</span>;
+
+<span class="c-com">/* Transições */</span>
+<span class="c-key">--transition-fast</span>:  <span class="c-val">150ms ease</span>;
+<span class="c-key">--transition-base</span>:  <span class="c-val">200ms ease</span>;
+<span class="c-key">--transition-enter</span>: <span class="c-val">400ms ease</span>;</pre>
+    </div>
+  </section>
+
+  <footer class="ds-footer">
+    <div class="container">
+      Design System · Nevel MED · v1.0
+    </div>
+  </footer>
+
+</body>
+</html>
