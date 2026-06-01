@@ -1482,6 +1482,9 @@
     }
 
     /* Pillar text labels INSIDE cada wedge — padrão consistente */
+    /* Labels SVG dentro do gráfico — escondidos no desktop (pillars já cobrem) */
+    .wedge-label { display: none; }
+
     .method-pillar {
       position: absolute;
       width: 200px;
@@ -2097,6 +2100,9 @@
       /* ── 1) Hero: reduz gap entre texto/botões e o bento ── */
       .hero-content { margin-bottom: 24px; }
 
+      /* ── 1b) Bento "Novos contatos": só os 2 primeiros pills no mobile ── */
+      .stack-wrap .pill-wrap:nth-child(n+3) { display: none; }
+
       /* ── 2) Método 3C: badge no topo, h2 no meio, descrição depois ── */
       .method-head-grid {
         display: flex;
@@ -2165,15 +2171,41 @@
       .method-diagram[data-filter="3"] .pillar-2 {
         opacity: 0.55;
       }
+      /* Filtro ativo também colore o wedge correspondente no mobile */
+      .method-diagram[data-filter="1"] .wedge-left,
+      .method-diagram[data-filter="2"] .wedge-top,
+      .method-diagram[data-filter="3"] .wedge-right {
+        fill: url(#wedge-hover-grad);
+      }
+      /* Cancela inversão de texto branco causada por data-active (touch sticky) */
+      .method-diagram[data-active] .method-pillar .name { color: var(--color-neutral-900); }
+      .method-diagram[data-active] .method-pillar .desc { color: var(--color-neutral-700); }
+      /* Labels SVG visíveis dentro do gráfico (só no mobile) */
+      .wedge-label {
+        display: initial;
+        fill: var(--color-neutral-900);
+        font-family: var(--font-family);
+        font-size: 52px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        cursor: pointer;
+        pointer-events: auto;
+        transition: fill 250ms ease;
+      }
+      .method-diagram[data-filter="1"] .wedge-label-1,
+      .method-diagram[data-filter="2"] .wedge-label-2,
+      .method-diagram[data-filter="3"] .wedge-label-3 {
+        fill: #FFFFFF;
+      }
 
-      /* ── 3) Imagine: título sticky no topo; boxes em flow normal ── */
+      /* ── 3) Imagine: título estático no topo da seção, sem caixa ── */
       .imagine-head {
-        position: sticky;
-        top: 0;
-        z-index: 5;
-        background: var(--color-neutral-900);
-        padding: 18px 0 12px;
-        margin: -18px 0 0;
+        position: static;
+        background: transparent;
+        padding: 0;
+        margin: 0 0 18px;
+        z-index: auto;
+        top: auto;
       }
       .imagine-card {
         position: static;
@@ -2729,6 +2761,11 @@
             <circle cx="26" cy="11" r="1.6"/>
           </g>
 
+          <!-- Labels visíveis dentro das fatias (mobile only) -->
+          <text class="wedge-label wedge-label-1" x="230" y="395" text-anchor="middle">Captação</text>
+          <text class="wedge-label wedge-label-2" x="498" y="225" text-anchor="middle">Comercial</text>
+          <text class="wedge-label wedge-label-3" x="770" y="395" text-anchor="middle">Controle</text>
+
           <defs>
             <linearGradient id="wedge-hover-grad" x1="100" y1="500" x2="500" y2="100" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#06C4FE"/>
@@ -3018,35 +3055,42 @@
 
 
 
-    // ───────── Método 3C — sincroniza hover entre wedge ↔ texto ─────────
+    // ───────── Método 3C — hover (desktop) + click filter (mobile) ─────────
     (function() {
       const diagram = document.getElementById('methodDiagram');
       if (!diagram) return;
       const map = [
-        { wedge: '.wedge-left',  pillar: '.pillar-1', id: '1' },
-        { wedge: '.wedge-top',   pillar: '.pillar-2', id: '2' },
-        { wedge: '.wedge-right', pillar: '.pillar-3', id: '3' },
+        { wedge: '.wedge-left',  pillar: '.pillar-1', label: '.wedge-label-1', id: '1' },
+        { wedge: '.wedge-top',   pillar: '.pillar-2', label: '.wedge-label-2', id: '2' },
+        { wedge: '.wedge-right', pillar: '.pillar-3', label: '.wedge-label-3', id: '3' },
       ];
-      map.forEach(({ wedge, pillar, id }) => {
+      const hasHover = window.matchMedia('(hover: hover)').matches;
+
+      map.forEach(({ wedge, pillar, label, id }) => {
         const w = diagram.querySelector(wedge);
         const p = diagram.querySelector(pillar);
-        const enter = () => diagram.setAttribute('data-active', id);
-        const leave = () => diagram.removeAttribute('data-active');
-        [w, p].forEach((el) => {
-          if (!el) return;
-          el.addEventListener('mouseenter', enter);
-          el.addEventListener('mouseleave', leave);
-        });
-      });
+        const t = diagram.querySelector(label);
 
-      // Click nos pillars (mobile): toggle data-filter — mostra só o pilar clicado
-      map.forEach(({ pillar, id }) => {
-        const p = diagram.querySelector(pillar);
-        if (!p) return;
-        p.addEventListener('click', () => {
+        // Hover effects só em dispositivos com hover real (desktop)
+        if (hasHover) {
+          const enter = () => diagram.setAttribute('data-active', id);
+          const leave = () => diagram.removeAttribute('data-active');
+          [w, p].forEach((el) => {
+            if (!el) return;
+            el.addEventListener('mouseenter', enter);
+            el.addEventListener('mouseleave', leave);
+          });
+        }
+
+        // Click toggle filter — tanto no card (pillar) quanto no label SVG
+        const onClick = () => {
           const current = diagram.getAttribute('data-filter');
           if (current === id) diagram.removeAttribute('data-filter');
           else diagram.setAttribute('data-filter', id);
+        };
+        [p, t].forEach((el) => {
+          if (!el) return;
+          el.addEventListener('click', onClick);
         });
       });
     })();
