@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Obrigado — Nevel MED</title>
-  <meta name="description" content="Recebemos suas informações. Pelas respostas compartilhadas, no momento o nosso serviço não é o encaixe ideal." />
+  <title>Obrigado pela sua atenção — Nevel MED</title>
+  <meta name="description" content="Após a análise das suas respostas, identificamos que a nossa solução não é o melhor encaixe para o perfil atual do seu negócio." />
   <meta name="robots" content="noindex,nofollow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,19 +34,16 @@
   <!-- End Meta Pixel Code -->
 
   <style>
-    /* ═══════════════════ TOKENS — mesmo design system ═══════════════════ */
+    /* ═══════════════════ TOKENS — mesmo design system, tema dark ═══════════════════ */
     :root {
       --color-primary:        #06C4FE;
       --color-secondary:      #2D5AD8;
-      --color-neutral-900:    #232E48;
-      --color-neutral-700:    #384266;
-      --color-neutral-500:    #636D86;
-      --color-neutral-100:    #E4F6FD;
-      --color-neutral-50:     #F3FCFF;
-      --color-neutral-0:      #FFFFFF;
+      --color-bg:             #0B1426;
+      --color-text:           #FFFFFF;
+      --color-text-muted:     rgba(255, 255, 255, 0.78);
+      --color-text-dim:       rgba(255, 255, 255, 0.45);
+      --color-divider:        rgba(255, 255, 255, 0.10);
       --font-family:          'Instrument Sans', system-ui, sans-serif;
-      --radius-full:          9999px;
-      --transition-base:      200ms ease;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,130 +51,128 @@
     body {
       font-family: var(--font-family);
       font-weight: 400;
-      background: var(--color-neutral-0);
-      color: var(--color-neutral-900);
+      background: var(--color-bg);
+      color: var(--color-text);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      position: relative;
     }
     img, svg { display: block; max-width: 100%; }
 
-    /* Wrapper full-height centralizado */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(6,196,254,0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -300px; left: -200px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(45,90,216,0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .thanks {
       position: relative;
+      z-index: 1;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 60px 40px;
-      overflow: hidden;
       text-align: center;
     }
 
-    /* Órbitas decorativas — mesmo padrão da /obg */
-    .orbits {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orbit {
-      position: absolute;
-      left: 50%;
-      top: 55%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      border: 1px dashed rgba(45, 90, 216, 0.18);
-    }
-    .orbit.one   { width: 480px;  height: 480px; }
-    .orbit.two   { width: 760px;  height: 760px; border-color: rgba(45, 90, 216, 0.14); }
-    .orbit.three { width: 1080px; height: 1080px; border-color: rgba(45, 90, 216, 0.10); }
-
-    /* Container do conteúdo */
     .thanks-content {
-      position: relative;
-      z-index: 1;
-      max-width: 640px;
+      max-width: 880px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 28px;
+      gap: 36px;
     }
 
-    .thanks-logo { height: 36px; width: auto; }
+    .thanks-logo { height: 42px; width: auto; }
 
     h1 {
       font-size: 64px;
       font-weight: 500;
       letter-spacing: -2px;
       line-height: 1.05;
-      color: var(--color-neutral-900);
-      margin-top: 8px;
+      color: var(--color-text);
     }
-    h1 span {
-      background: linear-gradient(135deg, #00AEFF 0%, #3C3CCE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    h1 .accent { color: var(--color-primary); }
+
     .lead {
-      font-size: 20px;
+      font-size: 22px;
       line-height: 1.55;
-      color: var(--color-neutral-500);
-      max-width: 560px;
-    }
-    .lead strong {
-      color: var(--color-neutral-900);
-      font-weight: 500;
+      color: var(--color-text);
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
     }
 
-    /* Animação suave de entrada */
+    .divider {
+      width: 100%;
+      max-width: 880px;
+      height: 1px;
+      background: var(--color-divider);
+      margin: 12px 0 0;
+    }
+
+    .footer-text {
+      font-size: 17px;
+      color: var(--color-text-dim);
+      line-height: 1.5;
+      max-width: 760px;
+    }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .thanks-logo,
-    h1,
-    .lead {
+    .thanks-logo, h1, .lead, .divider, .footer-text {
       animation: fadeUp 700ms cubic-bezier(.16,1,.3,1) both;
     }
-    .thanks-logo { animation-delay: 80ms; }
-    h1            { animation-delay: 220ms; }
-    .lead         { animation-delay: 340ms; }
+    .thanks-logo { animation-delay:  80ms; }
+    h1           { animation-delay: 200ms; }
+    .lead        { animation-delay: 340ms; }
+    .divider     { animation-delay: 480ms; }
+    .footer-text { animation-delay: 560ms; }
 
-    /* Mobile (≤640px) — mesmas regras unificadas */
+    /* Mobile (≤640px) */
     @media (max-width: 640px) {
       .thanks { padding: 50px 30px; }
-      .thanks-content { gap: 22px; max-width: 360px; }
-      .thanks-logo { height: 28px; }
-      h1 { font-size: 32px; letter-spacing: -1px; }
-      .lead { font-size: 15px; line-height: 1.5; }
-      .orbit.one   { width: 320px; height: 320px; }
-      .orbit.two   { width: 520px; height: 520px; }
-      .orbit.three { width: 720px; height: 720px; }
+      .thanks-content { gap: 26px; max-width: 360px; }
+      .thanks-logo { height: 30px; }
+      h1 { font-size: 28px; letter-spacing: -0.8px; }
+      .lead { font-size: 15px; gap: 16px; }
+      .footer-text { font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
   <main class="thanks">
-    <div class="orbits" aria-hidden="true">
-      <div class="orbit one"></div>
-      <div class="orbit two"></div>
-      <div class="orbit three"></div>
-    </div>
-
     <div class="thanks-content">
       <svg class="thanks-logo" viewBox="0 0 645 103" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Nevel MED">
         <path d="M65.3061 38.7848L21.3304 0.302236L21.1876 0.118622C11.2878 0.118622 8.36523 5.87697 8.36523 12.9767V14.7109L32.1688 35.903C41.3597 44.0892 54.8401 45.2572 65.3061 38.7848Z" fill="url(#tl_a)"/>
         <path d="M20.8963 82.0571V0.119186H15.3879C6.88554 0.119186 0 7.00473 0 15.4969V102.943C11.5371 102.943 20.8963 93.5942 20.8963 82.0571Z" fill="url(#tl_b)"/>
         <path d="M26.937 64.1546L70.9177 102.637L71.0606 102.821C80.9604 102.821 83.883 97.0624 83.883 89.9626V88.2285L60.0794 67.0363C50.8885 58.8502 37.4081 57.6822 26.9421 64.1546H26.937Z" fill="url(#tl_c)"/>
         <path d="M71.3503 20.8861V102.824H76.8587C85.356 102.824 92.2415 95.9385 92.2415 87.4464V0C80.7044 0 71.3452 9.34903 71.3452 20.8861H71.3503Z" fill="url(#tl_d)"/>
-        <path d="M167.786 25.6062H175.049V77.337H167.786L122.635 35.1123V77.337H115.372V25.6062H122.635L167.786 67.7677V25.6062Z" fill="#232E48"/>
-        <path d="M242.254 32.27H208.579C200.97 32.27 196.275 35.2807 194.493 41.3023C193.969 43.1341 193.644 45.4079 193.518 48.124H242.254V54.7877H193.518C193.644 57.4827 193.969 59.7565 194.493 61.6093C196.275 67.6519 200.97 70.6733 208.579 70.6733H242.254V77.337H208.768C204.303 77.337 200.593 76.6738 197.637 75.3473C193.277 73.3893 190.217 70.0416 188.456 65.3044C186.905 61.1145 186.129 56.5036 186.129 51.4716C186.129 46.4185 186.905 41.8076 188.456 37.6388C190.28 32.8384 193.34 29.4697 197.637 27.5327C200.572 26.2484 204.282 25.6062 208.768 25.6062H242.254V32.27Z" fill="#232E48"/>
-        <path d="M310.335 25.6062H318.321L287.225 77.337H280.716L249.494 25.6062H257.543L283.955 69.5679L310.335 25.6062Z" fill="#232E48"/>
-        <path d="M377.636 32.27H343.961C336.352 32.27 331.657 35.2807 329.875 41.3023C329.351 43.1341 329.026 45.4079 328.9 48.124H377.636V54.7877H328.9C329.026 57.4827 329.351 59.7565 329.875 61.6093C331.657 67.6519 336.352 70.6733 343.961 70.6733H377.636V77.337H344.15C339.685 77.337 335.975 76.6738 333.019 75.3473C328.659 73.3893 325.599 70.0416 323.838 65.3044C322.287 61.1145 321.512 56.5036 321.512 51.4716C321.512 46.4185 322.287 41.8076 323.838 37.6388C325.662 32.8384 328.722 29.4697 333.019 27.5327C335.954 26.2484 339.664 25.6062 344.15 25.6062H377.636V32.27Z" fill="#232E48"/>
-        <path d="M439.586 70.6733V77.337H398.271C395.546 77.337 393.376 76.4948 391.762 74.8105C390.127 73.1682 389.31 71.0101 389.31 68.3362V25.6062H396.636V68.2731C396.636 69.8732 397.474 70.6733 399.151 70.6733H439.586Z" fill="#232E48"/>
+        <path d="M167.786 25.6062H175.049V77.337H167.786L122.635 35.1123V77.337H115.372V25.6062H122.635L167.786 67.7677V25.6062Z" fill="#FFFFFF"/>
+        <path d="M242.254 32.27H208.579C200.97 32.27 196.275 35.2807 194.493 41.3023C193.969 43.1341 193.644 45.4079 193.518 48.124H242.254V54.7877H193.518C193.644 57.4827 193.969 59.7565 194.493 61.6093C196.275 67.6519 200.97 70.6733 208.579 70.6733H242.254V77.337H208.768C204.303 77.337 200.593 76.6738 197.637 75.3473C193.277 73.3893 190.217 70.0416 188.456 65.3044C186.905 61.1145 186.129 56.5036 186.129 51.4716C186.129 46.4185 186.905 41.8076 188.456 37.6388C190.28 32.8384 193.34 29.4697 197.637 27.5327C200.572 26.2484 204.282 25.6062 208.768 25.6062H242.254V32.27Z" fill="#FFFFFF"/>
+        <path d="M310.335 25.6062H318.321L287.225 77.337H280.716L249.494 25.6062H257.543L283.955 69.5679L310.335 25.6062Z" fill="#FFFFFF"/>
+        <path d="M377.636 32.27H343.961C336.352 32.27 331.657 35.2807 329.875 41.3023C329.351 43.1341 329.026 45.4079 328.9 48.124H377.636V54.7877H328.9C329.026 57.4827 329.351 59.7565 329.875 61.6093C331.657 67.6519 336.352 70.6733 343.961 70.6733H377.636V77.337H344.15C339.685 77.337 335.975 76.6738 333.019 75.3473C328.659 73.3893 325.599 70.0416 323.838 65.3044C322.287 61.1145 321.512 56.5036 321.512 51.4716C321.512 46.4185 322.287 41.8076 323.838 37.6388C325.662 32.8384 328.722 29.4697 333.019 27.5327C335.954 26.2484 339.664 25.6062 344.15 25.6062H377.636V32.27Z" fill="#FFFFFF"/>
+        <path d="M439.586 70.6733V77.337H398.271C395.546 77.337 393.376 76.4948 391.762 74.8105C390.127 73.1682 389.31 71.0101 389.31 68.3362V25.6062H396.636V68.2731C396.636 69.8732 397.474 70.6733 399.151 70.6733H439.586Z" fill="#FFFFFF"/>
         <rect x="462.716" y="9.732" width="182.137" height="83.4793" rx="17.1827" fill="url(#tl_e)"/>
         <path d="M526.953 35.0287H531.472V67.9145H526.953V43.8223L511.864 67.9145H507.679L492.551 43.7822V67.9145H488.012V35.0287H492.551L509.742 62.5741L526.953 35.0287Z" fill="#CAF3FF"/>
         <path d="M573.437 39.2649H552.395C547.64 39.2649 544.706 41.1789 543.593 45.0069C543.265 46.1713 543.062 47.6169 542.984 49.3435H573.437V53.5797H542.984C543.062 55.2929 543.265 56.7384 543.593 57.9162C544.706 61.7576 547.64 63.6783 552.395 63.6783H573.437V67.9145H552.513C549.723 67.9145 547.404 67.4929 545.557 66.6496C542.833 65.4049 540.921 63.2767 539.82 60.2652C538.851 57.6017 538.367 54.6705 538.367 51.4716C538.367 48.2593 538.851 45.3281 539.82 42.678C540.96 39.6263 542.872 37.4848 545.557 36.2534C547.391 35.4369 549.71 35.0287 552.513 35.0287H573.437V39.2649Z" fill="#CAF3FF"/>
@@ -191,10 +186,17 @@
         </defs>
       </svg>
 
-      <h1><span>Obrigado</span></h1>
+      <h1><span class="accent">Obrigado</span> por sua atenção.</h1>
 
-      <p class="lead">
-        Recebemos suas informações com cuidado. Pelas respostas que você compartilhou, percebemos que <strong>neste momento o nosso método não é o encaixe ideal</strong> para o seu consultório. Agradecemos o seu tempo e o seu interesse na Nevel MED.
+      <div class="lead">
+        <p>Após nossa análise, identificamos que nossa solução não é o melhor encaixe para o perfil atual do seu negócio.</p>
+        <p>Preferimos ser transparentes desde o início para que você possa encontrar a solução ideal. Ficamos à disposição para futuras conversas e desejamos sucesso. Abraço!</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="footer-text">
+        Desde já, agradecemos por sua disposição ao preencher o formulário.
       </p>
     </div>
   </main>
