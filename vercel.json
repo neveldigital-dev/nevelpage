@@ -5,6 +5,7 @@
   "rewrites": [
     { "source": "/v2", "destination": "/index-v2" },
     { "source": "/obg", "destination": "/index-obg" },
-    { "source": "/obg-desqualificado", "destination": "/index-obgdesqualificado" }
+    { "source": "/obg-desqualificado", "destination": "/index-obgdesqualificado" },
+    { "source": "/rd", "destination": "/index-rd" }
   ]
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecionando…</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+  <style>
+    html, body { margin: 0; padding: 0; background: #FFFFFF; }
+  </style>
+  <script>
+    (function () {
+      // Split-test: 33% / 33% / 34%
+      var variants = [
+        { url: 'https://med.neveldigital.com.br/',   weight: 33 },
+        { url: 'https://med.neveldigital.com.br/v2', weight: 33 },
+        { url: 'https://neveldigital.com.br/',       weight: 34 }
+      ];
+
+      // Seleciona pela soma cumulativa dos pesos
+      var roll = Math.random() * 100;
+      var acc = 0;
+      var chosen = variants[variants.length - 1].url;
+      for (var i = 0; i < variants.length; i++) {
+        acc += variants[i].weight;
+        if (roll < acc) { chosen = variants[i].url; break; }
+      }
+
+      // Preserva a query string da URL atual (UTMs etc.) no destino
+      var qs = window.location.search || '';
+      // Usa replace pra não poluir o histórico do browser
+      window.location.replace(chosen + qs);
+    })();
+  </script>
+  <!-- Fallback noscript: se JS estiver desativado, manda pra primeira variante -->
+  <noscript><meta http-equiv="refresh" content="0; url=https://med.neveldigital.com.br/" /></noscript>
+</head>
+<body></body>
+</html>
