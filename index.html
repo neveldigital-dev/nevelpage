@@ -3206,6 +3206,12 @@
         if (submitText) submitText.textContent = 'Enviando…';
 
         const data = Object.fromEntries(new FormData(form).entries());
+        // Renda: envia o label completo (ex: "R$ 50 mil a R$ 60 mil") em vez do value curto
+        const rendaSelect = form.querySelector('select[name="renda"]');
+        if (rendaSelect && rendaSelect.selectedIndex >= 0) {
+          const opt = rendaSelect.options[rendaSelect.selectedIndex];
+          if (opt && opt.value) data.renda = opt.text.trim();
+        }
         data.origem = location.pathname === '/v2' || location.pathname.endsWith('/index-v2') ? 'v2' : 'v1';
         data.enviado_em = new Date().toISOString();
         data.pagina = location.href;
