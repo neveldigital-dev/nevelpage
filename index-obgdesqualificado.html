@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Meta Pixel Code - LP OBRIGADO DESQUALIFICADO (com Advanced Matching) -->
+  <!-- Meta Pixel Code - LP DESQUALIFICADO (PIXEL LIMITADO) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -22,47 +22,11 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
 
-  const urlParams = new URLSearchParams(window.location.search);
-
-  // === Captura e tratamento dos dados do lead ===
-  const nomeCompleto = urlParams.get('nome_completo') || '';
-  const partesNome = nomeCompleto.trim().split(/\s+/);
-  const firstName = partesNome[0] ? partesNome[0].toLowerCase() : undefined;
-  const lastName = partesNome.length > 1 ? partesNome.slice(1).join(' ').toLowerCase() : undefined;
-
-  let telefone = urlParams.get('ph') ? urlParams.get('ph').replace(/\D/g, '') : undefined;
-  if (telefone && !telefone.startsWith('55')) {
-    telefone = '55' + telefone;
-  }
-
-  const email = urlParams.get('em') ? urlParams.get('em').toLowerCase().trim() : undefined;
-
-  // === Advanced Matching (sem o evento Lead — não queremos otimizar p/ desqualificado) ===
-  const userData = {
-    em: email,
-    ph: telefone,
-    fn: firstName,
-    ln: lastName,
-    external_id: email,
-    country: 'br'
-  };
-  Object.keys(userData).forEach(k => !userData[k] && delete userData[k]);
-
-  fbq('init', '882693831216247', userData);
+  fbq('init', '882693831216247');
   fbq('track', 'PageView');
-
-  // Event ID único (deduplicação futura com CAPI)
-  const eventId = 'desqual_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
-
-  // Dados de contexto p/ análise por segmento
-  const especialidade = urlParams.get('especialidade') || 'nao_informado';
-  const renda = urlParams.get('renda') || 'nao_informado';
-
-  // SOMENTE evento custom — o algoritmo do Meta NÃO deve otimizar pra esse perfil
-  fbq('trackCustom', '5 - VISUALIZOU LP OBG DESQUALIFICADO', {
-    especialidade: especialidade,
-    faixa_renda: renda
-  }, {eventID: eventId});
+  fbq('trackCustom', 'LeadDesqualificado', {
+    motivo: 'renda_abaixo_do_icp'
+  });
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=882693831216247&ev=PageView&noscript=1"
