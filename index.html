@@ -3242,11 +3242,21 @@
             body: JSON.stringify(data),
           });
           if (!res.ok) throw new Error('HTTP ' + res.status);
+          // Redireciona para /obg passando dados do lead p/ Advanced Matching
+          // do Pixel + UTMs originais. Form NÃO é resetado antes — precisamos
+          // dos valores para montar a query string.
+          const obgParams = new URLSearchParams();
+          if (data.nome) obgParams.set('nome_completo', data.nome);
+          if (data.whatsapp) obgParams.set('ph', data.whatsapp);
+          if (data.email) obgParams.set('em', data.email);
+          if (data.especialidade) obgParams.set('especialidade', data.especialidade);
+          if (data.renda) obgParams.set('renda', data.renda);
+          ['utm_source','utm_medium','utm_content','utm_term','utm_campaign'].forEach((k) => {
+            const v = params.get(k);
+            if (v) obgParams.set(k, v);
+          });
           form.reset();
-          // Redireciona para a página de obrigado preservando UTMs
-          const utmKeys = ['utm_source','utm_medium','utm_content','utm_term','utm_campaign'];
-          const qs = utmKeys.map(k => params.get(k) ? k + '=' + encodeURIComponent(params.get(k)) : null).filter(Boolean).join('&');
-          location.href = '/obg' + (qs ? '?' + qs : '');
+          location.href = '/obg?' + obgParams.toString();
         } catch (err) {
           alert('Não foi possível enviar agora. Por favor, tente novamente em instantes ou nos chame no WhatsApp.');
           console.error('Webhook submit failed:', err);

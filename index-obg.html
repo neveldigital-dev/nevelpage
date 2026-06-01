@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel Code - LP OBRIGADO (com Advanced Matching) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -21,9 +21,64 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '882693831216247');
-  fbq('track', 'PageView');
-  fbq('track', 'Lead');
+
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // === Captura e tratamento dos dados do lead ===
+
+  // Nome completo → separa em first_name e last_name
+  const nomeCompleto = urlParams.get('nome_completo') || '';
+  const partesNome = nomeCompleto.trim().split(/\s+/);
+  const firstName = partesNome[0] ? partesNome[0].toLowerCase() : undefined;
+  const lastName = partesNome.length > 1 ? partesNome.slice(1).join(' ').toLowerCase() : undefined;
+
+  // Telefone → apenas dígitos, com código do país (Brasil = 55)
+  let telefone = urlParams.get('ph') ? urlParams.get('ph').replace(/\D/g, '') : undefined;
+  if (telefone && !telefone.startsWith('55')) {
+    telefone = '55' + telefone;
+  }
+
+  // Email → lowercase, sem espaços
+  const email = urlParams.get('em') ? urlParams.get('em').toLowerCase().trim() : undefined;
+
+  // === Advanced Matching (dados que o Meta usa para identificar o lead) ===
+  const userData = {
+    em: email,
+    ph: telefone,
+    fn: firstName,
+    ln: lastName,
+    external_id: email,
+    country: 'br'
+  };
+
+  // Remove campos vazios
+  Object.keys(userData).forEach(k => !userData[k] && delete userData[k]);
+
+  // Inicia o Pixel JÁ com Advanced Matching
+  fbq('init', '882693831216247', userData);
+
+  // === Disparo dos eventos ===
+
+  // Event ID único (para deduplicação futura com CAPI)
+  const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+
+  // Dados de contexto (não usados para match — usados para análise por segmento)
+  const especialidade = urlParams.get('especialidade') || 'nao_informado';
+  const renda = urlParams.get('renda') || 'nao_informado';
+
+  // Evento padrão Lead → o que o algoritmo do Meta vai usar para otimizar
+  fbq('track', 'Lead', {
+    content_name: 'Lead Qualificado Nevel MED',
+    content_category: especialidade,
+    value: 0.00,
+    currency: 'BRL'
+  }, {eventID: eventId});
+
+  // Evento custom (mantido para sua planilha/dashboard continuarem funcionando)
+  fbq('trackCustom', '5 - VISUALIZOU LP OBG', {
+    especialidade: especialidade,
+    faixa_renda: renda
+  }, {eventID: eventId + '_custom'});
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=882693831216247&ev=Lead&noscript=1"
