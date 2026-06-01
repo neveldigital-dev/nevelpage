@@ -1424,11 +1424,15 @@
       transition: fill 500ms cubic-bezier(.16,1,.3,1);
       fill: var(--color-neutral-100);
     }
-    .method-diagram .wedge:hover,
-    .method-diagram[data-active="1"] .wedge-left,
-    .method-diagram[data-active="2"] .wedge-top,
-    .method-diagram[data-active="3"] .wedge-right {
-      fill: url(#wedge-hover-grad);
+    /* Hover/data-active só em dispositivos com hover real — em touch
+       o :hover fica "grudado" depois do tap, então restringimos aqui. */
+    @media (hover: hover) {
+      .method-diagram .wedge:hover,
+      .method-diagram[data-active="1"] .wedge-left,
+      .method-diagram[data-active="2"] .wedge-top,
+      .method-diagram[data-active="3"] .wedge-right {
+        fill: url(#wedge-hover-grad);
+      }
     }
 
     /* Arco externo do dome — desabilitado (substituído pelos arc-segments por fatia) */
@@ -1449,10 +1453,12 @@
       pointer-events: none;
       transition: stroke-dashoffset 700ms cubic-bezier(.16,1,.3,1);
     }
-    .method-diagram[data-active="1"] .arc-left,
-    .method-diagram[data-active="2"] .arc-top,
-    .method-diagram[data-active="3"] .arc-right {
-      stroke-dashoffset: 0;
+    @media (hover: hover) {
+      .method-diagram[data-active="1"] .arc-left,
+      .method-diagram[data-active="2"] .arc-top,
+      .method-diagram[data-active="3"] .arc-right {
+        stroke-dashoffset: 0;
+      }
     }
 
     /* Ícones FIXOS dentro dos 3 pequenos círculos — sem transform no hover */
@@ -1475,10 +1481,12 @@
       stroke-width: 0;
     }
     /* Hover/active: só muda cor do ícone, sem mover/escalar */
-    .method-diagram[data-active="1"] .pillar-icon.icon-1,
-    .method-diagram[data-active="2"] .pillar-icon.icon-2,
-    .method-diagram[data-active="3"] .pillar-icon.icon-3 {
-      color: var(--color-primary);
+    @media (hover: hover) {
+      .method-diagram[data-active="1"] .pillar-icon.icon-1,
+      .method-diagram[data-active="2"] .pillar-icon.icon-2,
+      .method-diagram[data-active="3"] .pillar-icon.icon-3 {
+        color: var(--color-primary);
+      }
     }
 
     /* Pillar text labels INSIDE cada wedge — padrão consistente */
@@ -1512,20 +1520,22 @@
     }
 
     /* Hover/active: texto inverte para branco + lifta sutilmente */
-    .method-diagram[data-active="1"] .pillar-1 .name,
-    .method-diagram[data-active="2"] .pillar-2 .name,
-    .method-diagram[data-active="3"] .pillar-3 .name {
-      color: #FFFFFF;
-    }
-    .method-diagram[data-active="1"] .pillar-1 .desc,
-    .method-diagram[data-active="2"] .pillar-2 .desc,
-    .method-diagram[data-active="3"] .pillar-3 .desc {
-      color: rgba(255, 255, 255, 0.95);
-    }
-    .method-diagram[data-active="1"] .pillar-1,
-    .method-diagram[data-active="2"] .pillar-2,
-    .method-diagram[data-active="3"] .pillar-3 {
-      transform: translateX(-50%) translateY(-2px);
+    @media (hover: hover) {
+      .method-diagram[data-active="1"] .pillar-1 .name,
+      .method-diagram[data-active="2"] .pillar-2 .name,
+      .method-diagram[data-active="3"] .pillar-3 .name {
+        color: #FFFFFF;
+      }
+      .method-diagram[data-active="1"] .pillar-1 .desc,
+      .method-diagram[data-active="2"] .pillar-2 .desc,
+      .method-diagram[data-active="3"] .pillar-3 .desc {
+        color: rgba(255, 255, 255, 0.95);
+      }
+      .method-diagram[data-active="1"] .pillar-1,
+      .method-diagram[data-active="2"] .pillar-2,
+      .method-diagram[data-active="3"] .pillar-3 {
+        transform: translateX(-50%) translateY(-2px);
+      }
     }
 
     /* Posições — centroide visual de cada wedge (LEFT 22% / TOP 50% / RIGHT 78%) */
