@@ -1955,6 +1955,110 @@
       .bento-card { grid-column: 1 !important; grid-row: auto !important; min-height: 200px; }
       .navbar .btn { padding: 0 14px; font-size: 12px; }
     }
+
+    /* ═══════════════════ MOBILE — REGRA UNIFICADA (≤640px) ═══════════════════
+       Conteúdo 360px com container 420px (30px de margem cada lado).
+       Headline 24px · Subheadline 18px · Botão 15px · Padding entre dobras 50px. */
+    @media (max-width: 640px) {
+      /* Container: 420px max, 30px padding → 360px de conteúdo */
+      .container {
+        max-width: 420px;
+        padding: 0 30px;
+      }
+
+      /* HEADLINES — 24px */
+      h1,
+      h2,
+      .hero h1,
+      .method-head-grid h2,
+      .imagine-head h2,
+      .audience-head h2,
+      .about-content h2,
+      .imagine-bottom-cta h2,
+      .final-cta-content h2,
+      .diagnostic-head h2,
+      .testimonials-head h2 {
+        font-size: 24px;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+      }
+      h3,
+      .step-content h3,
+      .form-card h3,
+      .form-step-content h4 {
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      /* SUBHEADLINES / TEXTOS — 18px */
+      .lead,
+      .body,
+      .hero .lead,
+      .step-content p,
+      .form-step-content p,
+      .form-card .body,
+      .imagine-card-content p,
+      .audience-item p,
+      .audience-head p,
+      .testimonial-text,
+      .about-paragraphs p,
+      .final-cta-content .lead,
+      .method-head-right p {
+        font-size: 18px;
+        line-height: 1.55;
+      }
+
+      /* BOTÕES — 15px */
+      .btn,
+      .btn-outline,
+      .navbar .btn,
+      .btn-primary .text_button {
+        font-size: 15px;
+      }
+      .btn,
+      .btn-primary,
+      .btn-outline {
+        padding: 0.85rem 1.5rem;
+        height: auto;
+      }
+      .navbar .btn { padding: 0.7rem 1.2rem; }
+      /* CTA final usa text_button em uppercase com letter-spacing — mantém compacto */
+      .final-cta-content .btn .text_button {
+        font-size: 12px;
+      }
+
+      /* ESPAÇAMENTO ENTRE DOBRAS — 50px */
+      .hero { padding: 104px 0 50px; }
+      .diagnostic,
+      .form-section,
+      .testimonials,
+      .audience,
+      .method,
+      .imagine,
+      .about,
+      .final-cta {
+        padding: 50px 0;
+      }
+      .imagine { padding-bottom: 120px; } /* mantém espaço para o CTA sobreposto */
+
+      /* Padding interno de cards comprimido para caber em 360px */
+      .form-card { padding: 28px 22px; }
+      .testimonial-card { padding: 28px 22px; gap: 18px; }
+      .step-content { padding: 24px 22px 28px; }
+      .audience-item { padding: 16px 18px; gap: 14px; }
+      .imagine-card { padding: 18px; }
+      .imagine-bottom-cta-content { padding: 36px 24px; min-height: auto; }
+      .final-cta-content { padding: 32px 20px; }
+
+      /* Reduz gaps de grids verticais empilhados */
+      .form-grid,
+      .about-grid,
+      .audience-grid,
+      .imagine-layout { gap: 32px; }
+      .testimonials-grid,
+      .diagnostic-grid { gap: 16px; }
+      .testimonials-head { margin-bottom: 32px; }
+    }
   </style>
 </head>
 <body>
