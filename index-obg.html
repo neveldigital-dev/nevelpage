@@ -7,9 +7,15 @@
   <meta name="description" content="Recebemos seus dados. Em até 5 minutos nosso time entrará em contato no WhatsApp para os próximos passos." />
   <meta name="robots" content="noindex,nofollow" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="https://fonts.gstatic.com/s/instrumentsans/v4/pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1ZuWi3g.woff2" />
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" />
+  <noscript><link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" /></noscript>
 
   <!-- Meta Pixel Code - LP OBRIGADO (com Advanced Matching) -->
   <script>
@@ -85,183 +91,7 @@
   /></noscript>
   <!-- End Meta Pixel Code -->
 
-  <style>
-    /* ═══════════════════ TOKENS — mesmo design system, tema dark ═══════════════════ */
-    :root {
-      --color-primary:        #06C4FE;
-      --color-primary-light:  #4DD9FF;
-      --color-secondary:      #2D5AD8;
-      --color-bg:             #0B1426;   /* base mais escura que neutral-900 */
-      --color-bg-soft:        #141F38;
-      --color-neutral-900:    #232E48;
-      --color-text:           #FFFFFF;
-      --color-text-muted:     rgba(255, 255, 255, 0.7);
-      --color-text-dim:       rgba(255, 255, 255, 0.45);
-      --color-divider:        rgba(255, 255, 255, 0.10);
-      --font-family:          'Instrument Sans', system-ui, sans-serif;
-      --radius-full:          9999px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    body {
-      font-family: var(--font-family);
-      font-weight: 400;
-      background: var(--color-bg);
-      color: var(--color-text);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      position: relative;
-    }
-    img, svg { display: block; max-width: 100%; }
-
-    /* Blobs decorativos sutis no fundo */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -200px; right: -200px;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(6,196,254,0.10) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: -300px; left: -200px;
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(45,90,216,0.10) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .thanks {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 40px;
-      text-align: center;
-    }
-
-    .thanks-content {
-      max-width: 880px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 36px;
-    }
-
-    .thanks-logo { height: 42px; width: auto; }
-
-    h1 {
-      font-size: 64px;
-      font-weight: 500;
-      letter-spacing: -2px;
-      line-height: 1.05;
-      color: var(--color-text);
-    }
-    h1 .accent {
-      color: var(--color-primary);
-    }
-
-    /* Barra de progresso 91% */
-    .progress {
-      width: 100%;
-      max-width: 720px;
-      height: 56px;
-      border-radius: var(--radius-full);
-      background: rgba(202, 243, 255, 0.18);
-      position: relative;
-      overflow: hidden;
-    }
-    .progress-fill {
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 91%;
-      background: linear-gradient(90deg, #06C4FE 0%, #2D5AD8 100%);
-      border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
-      color: #FFFFFF;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      animation: progress-grow 1.4s cubic-bezier(.16,1,.3,1) 200ms both;
-    }
-    @keyframes progress-grow {
-      from { width: 0; }
-      to { width: 91%; }
-    }
-    .progress-fill .label { white-space: nowrap; }
-    .progress-fill .percent {
-      font-size: 16px;
-      letter-spacing: 0;
-      text-transform: none;
-      font-weight: 500;
-    }
-
-    .lead {
-      font-size: 22px;
-      line-height: 1.55;
-      color: var(--color-text);
-      max-width: 760px;
-    }
-    .lead .accent {
-      color: var(--color-primary);
-      font-weight: 500;
-    }
-
-    .divider {
-      width: 100%;
-      max-width: 880px;
-      height: 1px;
-      background: var(--color-divider);
-      margin: 12px 0 0;
-    }
-
-    .footer-text {
-      font-size: 17px;
-      color: var(--color-text-dim);
-      line-height: 1.5;
-      max-width: 720px;
-    }
-
-    /* Animação suave de entrada */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .thanks-logo, h1, .progress, .lead, .divider, .footer-text {
-      animation: fadeUp 700ms cubic-bezier(.16,1,.3,1) both;
-    }
-    .thanks-logo   { animation-delay:  80ms; }
-    h1             { animation-delay: 200ms; }
-    .progress      { animation-delay: 320ms; }
-    .lead          { animation-delay: 440ms; }
-    .divider       { animation-delay: 560ms; }
-    .footer-text   { animation-delay: 640ms; }
-
-    /* Mobile (≤640px) */
-    @media (max-width: 640px) {
-      .thanks { padding: 50px 30px; }
-      .thanks-content { gap: 26px; max-width: 360px; }
-      .thanks-logo { height: 30px; }
-      h1 { font-size: 28px; letter-spacing: -0.8px; }
-      .progress { height: 46px; }
-      .progress-fill { padding: 0 18px; font-size: 11px; letter-spacing: 1px; }
-      .progress-fill .percent { font-size: 13px; }
-      .lead { font-size: 15px; line-height: 1.55; }
-      .footer-text { font-size: 14px; }
-    }
-  </style>
+  <style>:root{--color-primary:#06c4fe;--color-primary-light:#4dd9ff;--color-secondary:#2d5ad8;--color-bg:#0b1426;--color-bg-soft:#141f38;--color-neutral-900:#232e48;--color-text:#fff;--color-text-muted:rgba(255,255,255,0.7);--color-text-dim:rgba(255,255,255,0.45);--color-divider:rgba(255,255,255,0.10);--font-family:'Instrument Sans',system-ui,sans-serif;--radius-full:9999px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}body{font-family:var(--font-family);font-weight:400;background:var(--color-bg);color:var(--color-text);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}img,svg{display:block;max-width:100%}body::before{content:'';position:fixed;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(6,196,254,0.10) 0,transparent 60%);pointer-events:none;z-index:0}body::after{content:'';position:fixed;bottom:-300px;left:-200px;width:800px;height:800px;background:radial-gradient(circle,rgba(45,90,216,0.10) 0,transparent 60%);pointer-events:none;z-index:0}.thanks{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 40px;text-align:center}.thanks-content{max-width:880px;width:100%;display:flex;flex-direction:column;align-items:center;gap:36px}.thanks-logo{height:42px;width:auto}h1{font-size:64px;font-weight:500;letter-spacing:-2px;line-height:1.05;color:var(--color-text)}h1 .accent{color:var(--color-primary)}.progress{width:100%;max-width:720px;height:56px;border-radius:var(--radius-full);background:rgba(202,243,255,0.18);position:relative;overflow:hidden}.progress-fill{position:absolute;inset:0 auto 0 0;width:91%;background:linear-gradient(90deg,#06c4fe 0,#2d5ad8 100%);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:space-between;padding:0 28px;color:#fff;font-size:14px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;animation:progress-grow 1.4s cubic-bezier(.16,1,.3,1) 200ms both}@keyframes progress-grow{from{width:0}to{width:91%}}.progress-fill .label{white-space:nowrap}.progress-fill .percent{font-size:16px;letter-spacing:0;text-transform:none;font-weight:500}.lead{font-size:22px;line-height:1.55;color:var(--color-text);max-width:760px}.lead .accent{color:var(--color-primary);font-weight:500}.divider{width:100%;max-width:880px;height:1px;background:var(--color-divider);margin:12px 0 0}.footer-text{font-size:17px;color:var(--color-text-dim);line-height:1.5;max-width:720px}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.thanks-logo,h1,.progress,.lead,.divider,.footer-text{animation:fadeUp 700ms cubic-bezier(.16,1,.3,1) both}.thanks-logo{animation-delay:80ms}h1{animation-delay:200ms}.progress{animation-delay:320ms}.lead{animation-delay:440ms}.divider{animation-delay:560ms}.footer-text{animation-delay:640ms}@media(max-width:640px){.thanks{padding:50px 30px}.thanks-content{gap:26px;max-width:360px}.thanks-logo{height:30px}h1{font-size:28px;letter-spacing:-.8px}.progress{height:46px}.progress-fill{padding:0 18px;font-size:11px;letter-spacing:1px}.progress-fill .percent{font-size:13px}.lead{font-size:15px;line-height:1.55}.footer-text{font-size:14px}}</style>
 </head>
 <body>
 
