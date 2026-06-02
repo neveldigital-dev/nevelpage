@@ -2096,6 +2096,10 @@
       .imagine-card-image { max-width: 160px; margin: 0 auto; }
       .imagine-card-content { align-items: center; text-align: center; }
       .imagine-card-content p { text-align: center; }
+      /* Trava o aspect-ratio do box igual ao da img-mob2.webp (1080×1398) —
+         imagem aparece inteira sem crop nem distorção (object-fit: cover
+         age como fill quando o container respeita a proporção da imagem). */
+      .imagine-bottom-cta { aspect-ratio: 1080 / 1398; min-height: auto; }
       .imagine-bottom-cta-content {
         padding: 36px 24px;
         min-height: auto;
@@ -2919,7 +2923,7 @@
   <div class="imagine-cta-wrap reveal">
     <div class="imagine-bottom-cta">
       <picture>
-        <source media="(max-width: 640px)" srcset="img-mob.webp" />
+        <source media="(max-width: 640px)" srcset="img-mob2.webp" />
         <img class="imagine-bottom-cta-bg" src="medico.webp" alt="Médicos da Nevel MED" loading="lazy" />
       </picture>
       <div class="imagine-bottom-cta-content">
