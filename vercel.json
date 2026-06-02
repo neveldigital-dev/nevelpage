@@ -7,5 +7,19 @@
     { "source": "/obg", "destination": "/index-obg" },
     { "source": "/obg-desqualificado", "destination": "/index-obgdesqualificado" },
     { "source": "/rd", "destination": "/api/rd" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.(webp|svg|jpg|jpeg|png|gif|ico)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(css|js|woff|woff2|ttf)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
   ]
 }
