@@ -1725,6 +1725,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: flex-start;
       gap: 24px;
       min-height: 300px;
     }
@@ -2095,7 +2096,14 @@
       .imagine-card-image { max-width: 160px; margin: 0 auto; }
       .imagine-card-content { align-items: center; text-align: center; }
       .imagine-card-content p { text-align: center; }
-      .imagine-bottom-cta-content { padding: 36px 24px; min-height: auto; }
+      .imagine-bottom-cta-content {
+        padding: 36px 24px;
+        min-height: auto;
+        max-width: 100%;
+        align-items: center;
+        text-align: center;
+      }
+      .imagine-bottom-cta h2 { text-align: center; max-width: 100%; }
       .final-cta-content { padding: 32px 20px; }
 
       /* Reduz gaps de grids verticais empilhados */
@@ -2909,10 +2917,13 @@
   <!-- Box CTA sobreposto na transição entre dark (imagine) e light (about) -->
   <div class="imagine-cta-wrap reveal">
     <div class="imagine-bottom-cta">
-      <img class="imagine-bottom-cta-bg" src="medico.webp" alt="Médicos da Nevel MED" loading="lazy" />
+      <picture>
+        <source media="(max-width: 640px)" srcset="img-mob.webp" />
+        <img class="imagine-bottom-cta-bg" src="medico.webp" alt="Médicos da Nevel MED" loading="lazy" />
+      </picture>
       <div class="imagine-bottom-cta-content">
         <h2>É para isso que a Nevel existe. Você foca na sua especialidade e nós cuidamos do crescimento.</h2>
-        <a href="#contato" class="btn btn-primary btn-icon-arrow" style="align-self: flex-start;">
+        <a href="#contato" class="btn btn-primary btn-icon-arrow">
           <div class="dots_border"></div>
           <span class="text_button">Clique e agende seu diagnóstico</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
