@@ -4,6 +4,7 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/v2", "destination": "/index-v2" },
+    { "source": "/v3", "destination": "/index-v3" },
     { "source": "/obg", "destination": "/index-obg" },
     { "source": "/obg-desqualificado", "destination": "/index-obgdesqualificado" },
     { "source": "/rd", "destination": "/api/rd" }
