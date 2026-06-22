@@ -1,13 +1,11 @@
-// Edge Function — split-test redirect 25/25/25/25
+// Edge Function — split-test redirect 50/50 (v1 vs v2)
 // Roda no edge da Vercel e devolve 307 direto pro destino sorteado.
 // Sem HTML, sem JS no cliente — zero overhead de parse.
 export const config = { runtime: 'edge' };
 
 const VARIANTS = [
-  { url: 'https://med.neveldigital.com.br/',   weight: 25 },
-  { url: 'https://med.neveldigital.com.br/v2', weight: 25 },
-  { url: 'https://med.neveldigital.com.br/v3', weight: 25 },
-  { url: 'https://neveldigital.com.br/',       weight: 25 },
+  { url: 'https://med.neveldigital.com.br/',   weight: 50 },
+  { url: 'https://med.neveldigital.com.br/v2', weight: 50 },
 ];
 
 export default function handler(request) {
