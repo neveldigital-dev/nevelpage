@@ -1091,8 +1091,7 @@
             body: JSON.stringify(data),
           });
           if (!res.ok) throw new Error('HTTP ' + res.status);
-          // Redireciona para /obg (qualificado) ou /obg-desqualificado
-          // conforme a faixa de renda — value "menos-10" = abaixo do ICP.
+          // Todos os leads vão para /obg (sem pré-qualificação por renda).
           // Preserva dados do lead p/ Advanced Matching + UTMs originais.
           const obgParams = new URLSearchParams();
           if (data.nome) obgParams.set('nome_completo', data.nome);
@@ -1104,10 +1103,8 @@
             const v = params.get(k);
             if (v) obgParams.set(k, v);
           });
-          const isDisqualified = rendaSelect && rendaSelect.value === 'menos-10';
-          const redirectPath = isDisqualified ? '/obg-desqualificado' : '/obg';
           form.reset();
-          location.href = redirectPath + '?' + obgParams.toString();
+          location.href = '/obg?' + obgParams.toString();
         } catch (err) {
           alert('Não foi possível enviar agora. Por favor, tente novamente em instantes ou nos chame no WhatsApp.');
           console.error('Webhook submit failed:', err);

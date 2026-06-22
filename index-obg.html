@@ -63,31 +63,13 @@
   // Inicia o Pixel JÁ com Advanced Matching
   fbq('init', '882693831216247', userData);
 
-  // === Disparo dos eventos ===
-
-  // Event ID único (para deduplicação futura com CAPI)
-  const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
-
-  // Dados de contexto (não usados para match — usados para análise por segmento)
-  const especialidade = urlParams.get('especialidade') || 'nao_informado';
-  const renda = urlParams.get('renda') || 'nao_informado';
-
-  // Evento padrão Lead → o que o algoritmo do Meta vai usar para otimizar
-  fbq('track', 'Lead', {
-    content_name: 'Lead Qualificado Nevel MED',
-    content_category: especialidade,
-    value: 0.00,
-    currency: 'BRL'
-  }, {eventID: eventId});
-
-  // Evento custom (mantido para sua planilha/dashboard continuarem funcionando)
-  fbq('trackCustom', '5 - VISUALIZOU LP OBG', {
-    especialidade: especialidade,
-    faixa_renda: renda
-  }, {eventID: eventId + '_custom'});
+  // Dispara apenas PageView — a conversão personalizada LEAD QVH
+  // (ID 1442614654298927) é atribuída server-side pelo Meta a partir
+  // deste PageView na URL /obg.
+  fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=882693831216247&ev=Lead&noscript=1"
+  src="https://www.facebook.com/tr?id=882693831216247&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
 
