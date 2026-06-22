@@ -65,8 +65,13 @@
 
   // Dispara apenas PageView — a conversão personalizada LEAD QVH
   // (ID 1442614654298927) é atribuída server-side pelo Meta a partir
-  // deste PageView na URL /obg.
-  fbq('track', 'PageView');
+  // deste PageView na URL /obg. Os custom_data abaixo servem só para
+  // debug visual no painel "Eventos de teste" do Gerenciador.
+  fbq('track', 'PageView', {
+    content_name: 'LP OBG - LEAD QVH',
+    page_path: window.location.pathname,
+    source_url: window.location.href
+  });
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=882693831216247&ev=PageView&noscript=1"
