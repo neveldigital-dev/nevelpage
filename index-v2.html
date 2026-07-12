@@ -1019,18 +1019,24 @@
         if (digits.length <= 10) return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 6) + '-' + digits.slice(6);
         return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 7) + '-' + digits.slice(7);
       }
+      function validateWhats() {
+        if (!whats) return true;
+        const digits = whats.value.replace(/\D/g, '');
+        if (digits.length === 0) { whats.setCustomValidity(''); return false; }
+        if (digits.length !== 11) {
+          whats.setCustomValidity('Informe um número de WhatsApp válido com 11 dígitos (DDD + celular com 9 na frente).');
+          return false;
+        }
+        whats.setCustomValidity('');
+        return true;
+      }
       if (whats) {
         whats.addEventListener('input', (e) => {
           e.target.value = formatWhatsApp(e.target.value);
-        });
-        whats.addEventListener('blur', (e) => {
           const digits = e.target.value.replace(/\D/g, '');
-          if (digits.length > 0 && digits.length < 10) {
-            e.target.setCustomValidity('Informe um número válido com DDD.');
-          } else {
-            e.target.setCustomValidity('');
-          }
+          if (digits.length === 11) whats.setCustomValidity('');
         });
+        whats.addEventListener('blur', validateWhats);
       }
 
       // Validação extra de e-mail (reforça presença de @ e domínio)
@@ -1053,6 +1059,7 @@
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        validateWhats();
         if (!form.reportValidity()) return;
 
         if (submitBtn) submitBtn.disabled = true;
