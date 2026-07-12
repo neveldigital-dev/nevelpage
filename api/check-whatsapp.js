@@ -58,6 +58,9 @@ export default async function handler(req) {
     const exists = Boolean(
       first && (first.exists === true || first.numberExists === true || (first.jid && first.jid.includes('@s.whatsapp.net')))
     );
+    // Debug: passar { "debug": true } no body devolve a resposta bruta da Evolution
+    // pra inspecionar o formato. NÃO usar em produção sem remover depois.
+    if (body?.debug) return json({ exists, raw: data });
     return json({ exists });
   } catch (err) {
     clearTimeout(timer);
