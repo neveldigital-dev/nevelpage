@@ -2,6 +2,7 @@
 // Nunca expõe a apikey ao browser. Espera POST { phone: "11987654321" } (11 dígitos, DDD + celular).
 // Retorna { exists: true|false }. Em caso de erro/timeout, devolve { exists: null, error: '...' }
 // e o front decide se libera o envio (fallback aberto) ou trava.
+// v1 — deploy inicial com env vars EVOLUTION_API_URL/EVOLUTION_INSTANCE/EVOLUTION_API_KEY
 export const config = { runtime: 'edge' };
 
 const TIMEOUT_MS = 4000;
