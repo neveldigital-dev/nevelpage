@@ -1063,6 +1063,29 @@
         if (!form.reportValidity()) return;
 
         if (submitBtn) submitBtn.disabled = true;
+        if (submitText) submitText.textContent = 'Verificando WhatsApp…';
+
+        // Checa se o número está registrado no WhatsApp via Evolution API (edge proxy).
+        // Fail-open: se a checagem der erro, seguimos com o envio pra não perder lead legítimo.
+        try {
+          const digits = whats ? whats.value.replace(/\D/g, '') : '';
+          if (digits.length === 11) {
+            const check = await fetch('/api/check-whatsapp', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ phone: digits }),
+            });
+            const result = await check.json().catch(() => ({}));
+            if (result && result.exists === false) {
+              whats.setCustomValidity('Esse número não está no WhatsApp. Confira e tente novamente.');
+              whats.reportValidity();
+              if (submitBtn) submitBtn.disabled = false;
+              if (submitText) submitText.textContent = originalText;
+              return;
+            }
+          }
+        } catch (_) { /* fail-open */ }
+
         if (submitText) submitText.textContent = 'Enviando…';
 
         const data = Object.fromEntries(new FormData(form).entries());
