@@ -55,11 +55,10 @@ export default async function handler(req) {
 
     const data = await res.json();
     const first = Array.isArray(data) ? data[0] : data;
-    const exists = Boolean(
-      first && (first.exists === true || first.numberExists === true || (first.jid && first.jid.includes('@s.whatsapp.net')))
-    );
-    // Debug: passar { "debug": true } no body devolve a resposta bruta da Evolution
-    // pra inspecionar o formato. NÃO usar em produção sem remover depois.
+    // A Evolution devolve [{ jid, exists: bool, number, lid? }]. O JID sempre existe
+    // (é só o número formatado no padrão do whatsapp), então NÃO serve de sinal —
+    // só `exists === true` conta.
+    const exists = first?.exists === true || first?.numberExists === true;
     if (body?.debug) return json({ exists, raw: data });
     return json({ exists });
   } catch (err) {
