@@ -70,6 +70,8 @@
     @keyframes cta-heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
     .btn-primary{animation:cta-heartbeat 1.6s ease-in-out infinite;transform-origin:center}
     @media(prefers-reduced-motion:reduce){.btn-primary{animation:none}}
+    .video-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+    .video-play-btn:hover{background:rgba(0,0,0,0.75);transform:translate(-50%,-50%) scale(1.08)}
     @media(max-width:640px){
       .announcement-bar{font-size:12px;letter-spacing:.8px;padding:9px 12px}
       .hero{padding-top:80px}
@@ -504,7 +506,12 @@
       <div class="testimonials-grid">
         <div class="testimonial-card is-shot reveal reveal-d1">
           <div class="testimonial-shot">
-            <video src="depoimento-video.mp4" poster="depoimento-video-poster.jpg" controls playsinline preload="none" style="width:100%;height:auto;display:block;border-radius:14px;"></video>
+            <div class="video-wrap" style="position:relative;border-radius:14px;overflow:hidden;line-height:0;">
+              <video src="depoimento-video.mp4" poster="depoimento-video-poster.jpg" controls playsinline preload="none" style="width:100%;height:auto;display:block;"></video>
+              <button class="video-play-btn" aria-label="Reproduzir vídeo" onclick="this.parentElement.querySelector('video').play();this.style.display='none'">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
           </div>
         </div>
 
